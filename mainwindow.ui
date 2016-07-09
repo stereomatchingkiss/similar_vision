@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1199</width>
+    <height>693</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Similar Vision</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="paint_custom_words" name="list_view_folder">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Folders : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pb_add_folder">
+         <property name="toolTip">
+          <string>Add folder</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="pics.qrc">
+           <normaloff>:/pics/pics/folder_add.png</normaloff>:/pics/pics/folder_add.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pb_delete_folder">
+         <property name="toolTip">
+          <string>Remove folder</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="pics.qrc">
+           <normaloff>:/pics/pics/folder_delete.png</normaloff>:/pics/pics/folder_delete.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pb_up">
+         <property name="toolTip">
+          <string>Up</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="pics.qrc">
+           <normaloff>:/pics/pics/up.png</normaloff>:/pics/pics/up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pb_down">
+         <property name="toolTip">
+          <string>Down</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="pics.qrc">
+           <normaloff>:/pics/pics/down.png</normaloff>:/pics/pics/down.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pb_refresh">
+         <property name="toolTip">
+          <string>Refresh</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="pics.qrc">
+           <normaloff>:/pics/pics/refresh.png</normaloff>:/pics/pics/refresh.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pb_find_folder">
+         <property name="toolTip">
+          <string>Start search</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="pics.qrc">
+           <normaloff>:/pics/pics/search.png</normaloff>:/pics/pics/search.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="cb_scan_subdir">
+         <property name="text">
+          <string>Scan Subdirectories</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QGroupBox" name="gb_left_pic">
+        <property name="title">
+         <string/>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QPushButton" name="pb_lf_move">
+             <property name="toolTip">
+              <string>Move</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="pics.qrc">
+               <normaloff>:/pics/pics/right.png</normaloff>:/pics/pics/right.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pb_lf_browse">
+             <property name="toolTip">
+              <string>Browse</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="pics.qrc">
+               <normaloff>:/pics/pics/folder_go.png</normaloff>:/pics/pics/folder_go.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pb_lf_recycle">
+             <property name="toolTip">
+              <string>Delete</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="pics.qrc">
+               <normaloff>:/pics/pics/bin_recycle.png</normaloff>:/pics/pics/bin_recycle.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="gb_right_pic">
+        <property name="title">
+         <string/>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="pb_rt_move">
+             <property name="toolTip">
+              <string>Move</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="pics.qrc">
+               <normaloff>:/pics/pics/right.png</normaloff>:/pics/pics/right.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pb_rt_browse">
+             <property name="toolTip">
+              <string>Browse</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="pics.qrc">
+               <normaloff>:/pics/pics/folder_go.png</normaloff>:/pics/pics/folder_go.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pb_rt_recycle">
+             <property name="toolTip">
+              <string>Delete</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="pics.qrc">
+               <normaloff>:/pics/pics/bin_recycle.png</normaloff>:/pics/pics/bin_recycle.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_info">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableView" name="table_view_similar_pics"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1199</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="action_start_search"/>
+    <addaction name="action_exit"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="action_basic_setting"/>
+    <addaction name="action_advance_setting"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="action_qt"/>
+    <addaction name="action_fatcow"/>
+    <addaction name="action_check_for_update"/>
+    <addaction name="action_visit_program_website"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_qt">
+   <property name="text">
+    <string>Qt</string>
+   </property>
+  </action>
+  <action name="action_fatcow">
+   <property name="text">
+    <string>Fatcow</string>
+   </property>
+  </action>
+  <action name="action_start_search">
+   <property name="icon">
+    <iconset resource="pics.qrc">
+     <normaloff>:/pics/pics/search.png</normaloff>:/pics/pics/search.png</iconset>
+   </property>
+   <property name="text">
+    <string>Start search</string>
+   </property>
+  </action>
+  <action name="action_exit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="action_check_for_update">
+   <property name="text">
+    <string>Check for update</string>
+   </property>
+  </action>
+  <action name="action_visit_program_website">
+   <property name="text">
+    <string>Visit the program website</string>
+   </property>
+  </action>
+  <action name="action_basic_setting">
+   <property name="text">
+    <string>Basic</string>
+   </property>
+   <property name="toolTip">
+    <string>Basic settings</string>
+   </property>
+  </action>
+  <action name="action_advance_setting">
+   <property name="text">
+    <string>Advance</string>
+   </property>
+   <property name="toolTip">
+    <string>Advance settings</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>paint_custom_words</class>
+   <extends>QListView</extends>
+   <header location="global">paint_custom_words.hpp</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="pics.qrc"/>
+ </resources>
+ <connections/>
+</ui>
