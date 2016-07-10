@@ -8,7 +8,11 @@
 
 #include <QDebug>
 #include <QFileDialog>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QTimer>
+
+#include <opencv2/highgui.hpp>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,8 +34,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->table_view_similar_pics->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->table_view_similar_pics->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    ui->gp_view_lf->setScene(new QGraphicsScene(this));
+    ui->gp_view_rt->setScene(new QGraphicsScene(this));
     connect(folder_model_, &folder_model::drop_data,
             this, &MainWindow::enable_folder_edit_ui);
+    connect(ui->table_view_similar_pics, &QTableView::clicked,
+            this, &MainWindow::duplicate_img_select);
 }
 
 MainWindow::~MainWindow()
@@ -67,6 +75,12 @@ void MainWindow::scan_folders()
     connect(scf_thread_, &scan_folder::finished, scf_thread_, &QObject::deleteLater);
     setEnabled(false);
     scf_thread_->start();
+}
+
+void MainWindow::showEvent(QShowEvent *)
+{
+    ui->gp_view_lf->fitInView(ui->gp_view_lf->scene()->sceneRect(),
+                              Qt::KeepAspectRatio);
 }
 
 void MainWindow::on_pb_find_folder_clicked()
@@ -149,4 +163,28 @@ void MainWindow::on_pb_delete_folder_clicked()
         ++offset;
     }
     enable_folder_edit_ui();
+}
+
+void MainWindow::duplicate_img_select(QModelIndex const &index)
+{
+    auto const img_name_lf =
+            duplicate_img_model_->data(duplicate_img_model_->index(index.row(), 0),
+                                       Qt::DisplayRole);
+    auto const img_name_rt =
+            duplicate_img_model_->data(duplicate_img_model_->index(index.row(), 1),
+                                       Qt::DisplayRole);
+    view_duplicate_img(img_name_lf.toString(),
+                       ui->gp_view_lf);
+    view_duplicate_img(img_name_rt.toString(),
+                       ui->gp_view_rt);
+}
+
+void MainWindow::view_duplicate_img(const QString &name, QGraphicsView *view)
+{
+    QImage img(name);
+    if(!img.isNull()){
+        view->scene()->addPixmap(QPixmap::fromImage(img));
+        view->fitInView(view->scene()->itemsBoundingRect(),
+                        Qt::KeepAspectRatio);
+    }
 }

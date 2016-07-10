@@ -14,8 +14,8 @@
    <string>Similar Vision</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="paint_custom_words" name="list_view_folder">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
@@ -25,7 +25,7 @@
       </property>
      </widget>
     </item>
-    <item>
+    <item row="1" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -147,80 +147,90 @@
       </layout>
      </widget>
     </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <item row="2" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QGroupBox" name="gb_left_pic">
-        <property name="title">
-         <string/>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QGroupBox" name="gb_left_pic">
+          <property name="title">
+           <string/>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QPushButton" name="pb_lf_move">
-             <property name="toolTip">
-              <string>Move</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="pics.qrc">
-               <normaloff>:/pics/pics/right.png</normaloff>:/pics/pics/right.png</iconset>
+            <widget class="QGraphicsView" name="gp_view_lf">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pb_lf_browse">
-             <property name="toolTip">
-              <string>Browse</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="pics.qrc">
-               <normaloff>:/pics/pics/folder_go.png</normaloff>:/pics/pics/folder_go.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pb_lf_recycle">
-             <property name="toolTip">
-              <string>Delete</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="pics.qrc">
-               <normaloff>:/pics/pics/bin_recycle.png</normaloff>:/pics/pics/bin_recycle.png</iconset>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QPushButton" name="pb_lf_move">
+               <property name="toolTip">
+                <string>Move</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="pics.qrc">
+                 <normaloff>:/pics/pics/right.png</normaloff>:/pics/pics/right.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pb_lf_browse">
+               <property name="toolTip">
+                <string>Browse</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="pics.qrc">
+                 <normaloff>:/pics/pics/folder_go.png</normaloff>:/pics/pics/folder_go.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pb_lf_recycle">
+               <property name="toolTip">
+                <string>Delete</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="pics.qrc">
+                 <normaloff>:/pics/pics/bin_recycle.png</normaloff>:/pics/pics/bin_recycle.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
-         </item>
-        </layout>
-       </widget>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QGroupBox" name="gb_right_pic">
         <property name="title">
          <string/>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>TextLabel</string>
+          <widget class="QGraphicsView" name="gp_view_rt">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
           </widget>
          </item>
@@ -275,15 +285,28 @@
       </item>
      </layout>
     </item>
-    <item>
+    <item row="3" column="0">
      <widget class="QLabel" name="label_info">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QTableView" name="table_view_similar_pics"/>
+    <item row="5" column="0">
+     <widget class="QTableView" name="table_view_similar_pics">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

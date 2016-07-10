@@ -7,6 +7,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class QGraphicsView;
 class QTimer;
 
 class duplicate_img_model;
@@ -32,11 +33,15 @@ private slots:
     void on_pb_delete_folder_clicked();
 
 private:
+    void duplicate_img_select(QModelIndex const &index);
     void enable_folder_edit_ui();
     void enable_image_edit_ui();
     void enable_main_ui();
     void find_similar_pics();
-    void scan_folders();
+    void scan_folders();    
+    void showEvent(QShowEvent*) override;
+    void view_duplicate_img(QString const &name,
+                            QGraphicsView *view);
 
     Ui::MainWindow *ui;
 
