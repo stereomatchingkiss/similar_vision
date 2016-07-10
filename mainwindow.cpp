@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->list_view_folder->setModel(folder_model_);
     ui->list_view_folder->setAcceptDrops(true);
+    ui->list_view_folder->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     enable_folder_edit_ui();
     enable_image_edit_ui();
@@ -121,4 +122,28 @@ void MainWindow::enable_main_ui()
     ui->table_view_similar_pics->resizeColumnsToContents();
     setEnabled(true);
     enable_image_edit_ui();
+}
+
+void MainWindow::on_pb_delete_folder_clicked()
+{
+    struct guard_update
+    {
+        explicit guard_update(QListView *view) :
+            view_(view)
+        {
+            view_->setUpdatesEnabled(false);
+        }
+
+        ~guard_update() { view_->setUpdatesEnabled(true); }
+
+        QListView *view_;
+    };
+
+    guard_update guard(ui->list_view_folder);
+    auto indexes = ui->list_view_folder->selectionModel()->selectedRows();
+    std::sort(std::begin(indexes), std::end(indexes));
+    for(int i = indexes.count() - 1; i > -1; --i){
+        folder_model_->removeRow(indexes.at(i).row());
+    }
+    enable_folder_edit_ui();
 }

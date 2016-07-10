@@ -29,6 +29,8 @@ private slots:
 
     void on_pb_refresh_clicked();
 
+    void on_pb_delete_folder_clicked();
+
 private:
     void enable_folder_edit_ui();
     void enable_image_edit_ui();
