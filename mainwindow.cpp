@@ -142,9 +142,11 @@ void MainWindow::on_pb_delete_folder_clicked()
 
     guard_update guard(ui->list_view_folder);
     auto indexes = ui->list_view_folder->selectionModel()->selectedRows();
-    std::sort(std::begin(indexes), std::end(indexes));
-    for(int i = indexes.count() - 1; i > -1; --i){
-        folder_model_->removeRow(indexes.at(i).row());
+    int offset = 0;
+    for(auto const &var : indexes){
+        int const Index = var.row() - offset;
+        folder_model_->removeRow(Index, {});
+        ++offset;
     }
     enable_folder_edit_ui();
 }
