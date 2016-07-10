@@ -170,7 +170,6 @@ void pics_find_img_hash::compute_hash_mt()
             algo_->compute(img, hash);
             hash_arr_.emplace_back(name, hash);
         }
-        qDebug()<<"cur id : "<<QThread::currentThreadId();
         emit progress("Image preprocess mt : " +
                       QString("%1").arg(size.load()));
     };
