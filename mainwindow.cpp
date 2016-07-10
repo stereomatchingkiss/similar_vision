@@ -104,6 +104,7 @@ void MainWindow::enable_folder_edit_ui()
     ui->pb_down->setEnabled(enable);
     ui->pb_refresh->setEnabled(enable);
     ui->action_start_search->setEnabled(enable);
+    ui->cb_scan_subdir->setEnabled(enable);
 }
 
 void MainWindow::enable_image_edit_ui()
