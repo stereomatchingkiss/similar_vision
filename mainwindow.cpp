@@ -7,6 +7,7 @@
 #include "model/folder_model.hpp"
 
 #include <QDebug>
+#include <QFileDialog>
 #include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -39,7 +40,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pb_add_folder_clicked()
 {
+    QFileDialog dialog(nullptr, tr("Open Directory"));
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+    dialog.setFileMode(QFileDialog::DirectoryOnly);
+    dialog.setOption(QFileDialog::ShowDirsOnly);
+    dialog.setOption(QFileDialog::DontResolveSymlinks);
+    if(dialog.exec()){
+        auto const dir = dialog.selectedFiles()[0];
+        auto str_list = folder_model_->stringList();
+        str_list.push_back(dir);
+        str_list.removeDuplicates();
+        folder_model_->setStringList(str_list);
+        enable_folder_edit_ui();
+    }
 
+    raise();
 }
 
 void MainWindow::scan_folders()
