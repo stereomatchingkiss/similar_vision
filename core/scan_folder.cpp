@@ -66,9 +66,11 @@ void scan_folder::scan_folders()
 
     emit progress("Total files found : 0");
     for(auto const &dir : abs_dirs_){
+        auto const iter_flags = scan_subfolders_ ?
+                QDirIterator::Subdirectories : QDirIterator::NoIteratorFlags;
         QDirIterator directories(dir,
                                  QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot,
-                                 QDirIterator::Subdirectories);
+                                 iter_flags);
         while(directories.hasNext()){
             //qDebug()<<directories.fileInfo().suffix();
             if(is_img.find(directories.fileInfo().suffix()) != std::end(is_img)){
