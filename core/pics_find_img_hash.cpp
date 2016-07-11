@@ -33,8 +33,6 @@ public:
     template <class Edge, class Graph>
     void tree_edge(Edge u, const Graph&)
     {
-        //std::cout<<u.m_source<<","<<u.m_target<<std::endl;
-        //std::cout<<u<<std::endl;
         edges_.emplace_back(u);
     }
 
@@ -81,17 +79,12 @@ graph_type create_graph(Tree const &tree,
     return graph;
 }
 
-template<typename Graph, typename Items>
-std::vector<edges_type> create_edges(Graph const &graph, Items const &items)
+template<typename Graph>
+std::vector<edges_type> create_edges(Graph const &graph)
 {
     std::vector<edges_type> edges;
     dfs_visitor vis(edges);
-    boost::depth_first_search(graph, boost::visitor(vis));
-    for(auto const &edge : edges){
-        qDebug()<<"("<<edge.m_source<<","<<edge.m_target
-               <<") : "<<items[edge.m_source].first<<", "
-              <<items[edge.m_target].first;
-    }
+    boost::depth_first_search(graph, boost::visitor(vis));    
 
     return edges;
 }
@@ -129,7 +122,7 @@ void pics_find_img_hash::compare_hash()
 
     auto const graph = create_graph(hamming_tree,
                                     abs_file_path_.size(), 10);
-    auto const edges = create_edges(graph, hamming_tree.get_items());
+    auto const edges = create_edges(graph);
     auto const &items = hamming_tree.get_items();
     original_img_.clear();
     duplicate_img_.clear();
