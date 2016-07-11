@@ -183,6 +183,7 @@ void MainWindow::view_duplicate_img(const QString &name, QGraphicsView *view)
 {
     QImage img(name);
     if(!img.isNull()){
+        view->scene()->clear();
         view->scene()->addPixmap(QPixmap::fromImage(img));
         view->fitInView(view->scene()->itemsBoundingRect(),
                         Qt::KeepAspectRatio);
