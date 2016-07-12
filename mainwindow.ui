@@ -18,10 +18,22 @@
     <item row="0" column="0">
      <widget class="paint_custom_words" name="list_view_folder">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
+       </size>
       </property>
      </widget>
     </item>
@@ -313,10 +325,22 @@
     <item row="5" column="0">
      <widget class="QTableView" name="table_view_similar_pics">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>120</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>120</height>
+       </size>
       </property>
      </widget>
     </item>
