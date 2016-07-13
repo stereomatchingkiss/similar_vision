@@ -119,17 +119,17 @@ void MainWindow::on_pb_refresh_clicked()
 void MainWindow::enable_folder_edit_ui()
 {
     auto const &str_list = folder_model_->stringList();
-    bool const enable = !str_list.isEmpty();
+    bool const has_item = !str_list.isEmpty();
     auto const &selected_rows = ui->list_view_folder->selectionModel()->selectedRows();
     bool const item_selected = !selected_rows.isEmpty();
 
-    ui->pb_delete_folder->setEnabled(enable && item_selected);
-    ui->pb_find_folder->setEnabled(enable);
-    ui->pb_refresh->setEnabled(enable);
-    ui->action_start_search->setEnabled(enable);
-    ui->cb_scan_subdir->setEnabled(enable);
+    ui->pb_delete_folder->setEnabled(has_item && item_selected);
+    ui->pb_find_folder->setEnabled(has_item);
+    ui->pb_refresh->setEnabled(has_item);
+    ui->action_start_search->setEnabled(has_item);
+    ui->cb_scan_subdir->setEnabled(has_item);
 
-    if(enable && str_list.size() > 1){
+    if(str_list.size() > 1){
         if(selected_rows.size() == 1){
             auto const index = ui->list_view_folder->currentIndex();
             if(index.isValid()){
