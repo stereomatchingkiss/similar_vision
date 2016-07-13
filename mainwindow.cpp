@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->list_view_folder->setModel(folder_model_);
     ui->list_view_folder->setAcceptDrops(true);
     ui->list_view_folder->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    ui->list_view_folder->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     enable_folder_edit_ui();
     enable_image_edit_ui();
@@ -39,7 +40,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->gp_view_lf->setScene(new QGraphicsScene(this));
     ui->gp_view_rt->setScene(new QGraphicsScene(this));
+
     connect(folder_model_, &folder_model::drop_data,
+            this, &MainWindow::enable_folder_edit_ui);
+    connect(ui->list_view_folder, &paint_custom_words::view_selected,
             this, &MainWindow::enable_folder_edit_ui);
     connect(ui->table_view_similar_pics, &QTableView::clicked,
             this, &MainWindow::duplicate_img_select);
@@ -115,13 +119,18 @@ void MainWindow::on_pb_refresh_clicked()
 void MainWindow::enable_folder_edit_ui()
 {
     bool const enable = !folder_model_->stringList().isEmpty();
-    ui->pb_delete_folder->setEnabled(enable);
+    bool const item_selected =
+            !ui->list_view_folder->selectionModel()->selectedRows().isEmpty();
+
+    ui->pb_delete_folder->setEnabled(enable && item_selected);
     ui->pb_find_folder->setEnabled(enable);
-    ui->pb_up->setEnabled(enable);
-    ui->pb_down->setEnabled(enable);
     ui->pb_refresh->setEnabled(enable);
     ui->action_start_search->setEnabled(enable);
     ui->cb_scan_subdir->setEnabled(enable);
+
+    bool const valid_size = folder_model_->stringList().size() > 1;
+    ui->pb_up->setEnabled(enable && valid_size);
+    ui->pb_down->setEnabled(enable && valid_size);
 }
 
 void MainWindow::enable_image_edit_ui()
@@ -146,18 +155,27 @@ void MainWindow::on_pb_delete_folder_clicked()
 {
     struct guard_update
     {
-        explicit guard_update(QListView *view) :
-            view_(view)
+        explicit guard_update(paint_custom_words *view, MainWindow *win) :
+            view_(view),
+            win_(win)
         {
             view_->setUpdatesEnabled(false);
+            win_->disconnect(view_, &paint_custom_words::view_selected,
+                             win_, &MainWindow::enable_folder_edit_ui);
         }
 
-        ~guard_update() { view_->setUpdatesEnabled(true); }
+        ~guard_update()
+        {
+            view_->setUpdatesEnabled(true);
+            win_->connect(view_, &paint_custom_words::view_selected,
+                          win_,  &MainWindow::enable_folder_edit_ui);
+        }
 
-        QListView *view_;
+        paint_custom_words *view_;
+        MainWindow *win_;
     };
 
-    guard_update guard(ui->list_view_folder);
+    guard_update guard(ui->list_view_folder, this);
     auto indexes = ui->list_view_folder->selectionModel()->selectedRows();
     int offset = 0;
     for(auto const &var : indexes){
