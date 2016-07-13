@@ -38,9 +38,10 @@ private:
     void enable_image_edit_ui();
     void enable_main_ui();
     void find_similar_pics();
-    void scan_folders();    
-    void showEvent(QShowEvent*) override;
+    void resizeEvent(QResizeEvent*) override;
+    void scan_folders();        
     void view_duplicate_img(QString const &name,
+                            bool img_read,
                             QGraphicsView *view);
 
     Ui::MainWindow *ui;
@@ -48,6 +49,10 @@ private:
     duplicate_img_model *duplicate_img_model_;
     folder_model *folder_model_;
     pics_find_img_hash *pf_img_hash_;
+    bool img_lf_changed_;
+    bool img_rt_changed_;
+    QString pre_img_name_lf_;
+    QString pre_img_name_rt_;
     scan_folder *scf_thread_;
     QTimer *timer_;
 };

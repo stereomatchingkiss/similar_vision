@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QtConcurrent/QtConcurrentRun>
 #include <QTimer>
 
 #include <opencv2/highgui.hpp>
@@ -19,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     duplicate_img_model_(new duplicate_img_model(parent)),
     folder_model_(new folder_model(parent)),
+    img_lf_changed_(false),
+    img_rt_changed_(false),
     pf_img_hash_(nullptr),
     scf_thread_(nullptr),
     timer_(new QTimer(this))
@@ -77,12 +80,6 @@ void MainWindow::scan_folders()
     scf_thread_->start();
 }
 
-void MainWindow::showEvent(QShowEvent *)
-{
-    ui->gp_view_lf->fitInView(ui->gp_view_lf->scene()->sceneRect(),
-                              Qt::KeepAspectRatio);
-}
-
 void MainWindow::on_pb_find_folder_clicked()
 {    
     scan_folders();
@@ -101,6 +98,12 @@ void MainWindow::find_similar_pics()
     connect(pf_img_hash_, &pics_find_img_hash::finished, pf_img_hash_, &QObject::deleteLater);
 
     pf_img_hash_->start();
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    duplicate_img_select(ui->table_view_similar_pics->currentIndex());
 }
 
 void MainWindow::on_pb_refresh_clicked()
@@ -169,22 +172,35 @@ void MainWindow::duplicate_img_select(QModelIndex const &index)
 {
     auto const img_name_lf =
             duplicate_img_model_->data(duplicate_img_model_->index(index.row(), 0),
-                                       Qt::DisplayRole);
+                                       Qt::DisplayRole).toString();
     auto const img_name_rt =
             duplicate_img_model_->data(duplicate_img_model_->index(index.row(), 1),
-                                       Qt::DisplayRole);
-    view_duplicate_img(img_name_lf.toString(),
+                                       Qt::DisplayRole).toString();
+    img_lf_changed_ = pre_img_name_lf_ != img_name_lf ? true : false;
+    img_rt_changed_ = pre_img_name_rt_ != img_name_rt ? true : false;
+    pre_img_name_lf_ = img_name_lf;
+    pre_img_name_rt_ = img_name_rt;
+    view_duplicate_img(pre_img_name_lf_,
+                       img_lf_changed_,
                        ui->gp_view_lf);
-    view_duplicate_img(img_name_rt.toString(),
+    view_duplicate_img(pre_img_name_rt_,
+                       img_rt_changed_,
                        ui->gp_view_rt);
 }
 
-void MainWindow::view_duplicate_img(const QString &name, QGraphicsView *view)
+void MainWindow::view_duplicate_img(const QString &name,
+                                    bool img_changed,
+                                    QGraphicsView *view)
 {
-    QImage img(name);
-    if(!img.isNull()){
-        view->scene()->clear();
-        view->scene()->addPixmap(QPixmap::fromImage(img));
+    if(img_changed){
+        QImage img(name);
+        if(!img.isNull()){
+            view->scene()->clear();
+            view->scene()->addPixmap(QPixmap::fromImage(img));
+            view->fitInView(view->scene()->itemsBoundingRect(),
+                            Qt::KeepAspectRatio);
+        }
+    }else{
         view->fitInView(view->scene()->itemsBoundingRect(),
                         Qt::KeepAspectRatio);
     }
