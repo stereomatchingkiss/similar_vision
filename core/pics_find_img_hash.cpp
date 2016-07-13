@@ -135,6 +135,7 @@ void pics_find_img_hash::compare_hash()
 void pics_find_img_hash::compute_hash()
 {
     hash_arr_.clear();
+    hash_arr_.reserve(abs_file_path_.size());
     for(auto const &name : abs_file_path_){
         auto const img = cv::imread(name.toStdString());
         if(!img.empty()){
@@ -148,8 +149,9 @@ void pics_find_img_hash::compute_hash()
 }
 
 void pics_find_img_hash::compute_hash_mt()
-{
+{    
     hash_arr_.clear();
+    hash_arr_.reserve(abs_file_path_.size());
     std::mutex mutex;
     std::atomic<size_t> size = 0;
     auto compute_hash = [&](QString const &name)
@@ -166,7 +168,7 @@ void pics_find_img_hash::compute_hash_mt()
         emit progress("Image preprocess mt : " +
                       QString("%1").arg(size.load()));
     };
-    QtConcurrent::blockingMap(abs_file_path_, compute_hash);
+    QtConcurrent::blockingMap(abs_file_path_, compute_hash);//*/
 }
 
 void pics_find_img_hash::run()
