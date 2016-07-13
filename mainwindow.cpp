@@ -118,9 +118,10 @@ void MainWindow::on_pb_refresh_clicked()
 
 void MainWindow::enable_folder_edit_ui()
 {
-    bool const enable = !folder_model_->stringList().isEmpty();
-    bool const item_selected =
-            !ui->list_view_folder->selectionModel()->selectedRows().isEmpty();
+    auto const &str_list = folder_model_->stringList();
+    bool const enable = !str_list.isEmpty();
+    auto const &selected_rows = ui->list_view_folder->selectionModel()->selectedRows();
+    bool const item_selected = !selected_rows.isEmpty();
 
     ui->pb_delete_folder->setEnabled(enable && item_selected);
     ui->pb_find_folder->setEnabled(enable);
@@ -128,9 +129,27 @@ void MainWindow::enable_folder_edit_ui()
     ui->action_start_search->setEnabled(enable);
     ui->cb_scan_subdir->setEnabled(enable);
 
-    bool const valid_size = folder_model_->stringList().size() > 1;
-    ui->pb_up->setEnabled(enable && valid_size);
-    ui->pb_down->setEnabled(enable && valid_size);
+    if(enable && str_list.size() > 1){
+        if(selected_rows.size() == 1){
+            auto const index = ui->list_view_folder->currentIndex();
+            if(index.isValid()){
+                bool const not_at_bottom =
+                        index.row() != folder_model_->rowCount() - 1;
+                bool const not_at_top = index.row() != 0;
+                ui->pb_up->setEnabled(not_at_top);
+                ui->pb_down->setEnabled(not_at_bottom);
+            }else{
+                ui->pb_up->setEnabled(false);
+                ui->pb_down->setEnabled(false);
+            }
+        }else{
+            ui->pb_up->setEnabled(false);
+            ui->pb_down->setEnabled(false);
+        }
+    }else{
+        ui->pb_up->setEnabled(false);
+        ui->pb_down->setEnabled(false);
+    }
 }
 
 void MainWindow::enable_image_edit_ui()
