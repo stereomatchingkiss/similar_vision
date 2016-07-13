@@ -242,3 +242,19 @@ void MainWindow::view_duplicate_img(const QString &name,
                         Qt::KeepAspectRatio);
     }
 }
+
+void MainWindow::on_pb_up_clicked()
+{
+    auto const index = ui->list_view_folder->currentIndex();
+    auto const new_index = folder_model_->index(index.row()-1);
+    ui->list_view_folder->setCurrentIndex(new_index);
+    enable_folder_edit_ui();
+}
+
+void MainWindow::on_pb_down_clicked()
+{
+    auto const index = ui->list_view_folder->currentIndex();
+    auto const new_index = folder_model_->index(index.row()+1);
+    ui->list_view_folder->setCurrentIndex(new_index);
+    enable_folder_edit_ui();
+}

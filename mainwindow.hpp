@@ -32,6 +32,10 @@ private slots:
 
     void on_pb_delete_folder_clicked();
 
+    void on_pb_up_clicked();
+
+    void on_pb_down_clicked();
+
 private:
     void duplicate_img_select(QModelIndex const &index);
     void enable_folder_edit_ui();
