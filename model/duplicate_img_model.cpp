@@ -56,6 +56,21 @@ QVariant duplicate_img_model::headerData(int section, Qt::Orientation orientatio
     return {};
 }
 
+bool duplicate_img_model::remove_img(const QString &img)
+{
+    //TODO : use a cheaper solution to remove image
+    size_t const ori_size = items_.get<0>().size();
+    items_.get<duplicate>().erase(img);
+    items_.get<origin>().erase(img);
+    if(ori_size != items_.get<0>().size()){
+        removeRows(0, static_cast<int>(ori_size));
+        insertRows(0, static_cast<int>(items_.get<0>().size()));
+        return true;
+    }
+
+    return false;
+}
+
 bool duplicate_img_model::insertRows(int row, int count, const QModelIndex&)
 {
     if(!items_.get<0>().empty()){
@@ -81,7 +96,7 @@ int duplicate_img_model::rowCount(const QModelIndex&) const
 
 void duplicate_img_model::set_img_set(const QStringList &origin_img, const QStringList &duplicate_img)
 {
-    removeRows(0, origin_img.size());
+    removeRows(0, static_cast<int>(items_.get<0>().size()));
     auto &items = items_.get<0>();
     items.clear();
     for(int i = 0; i != origin_img.size(); ++i){

@@ -19,6 +19,7 @@ public:
 
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
+    bool remove_img(QString const &img);
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     void set_img_set(QStringList const &origin_img, QStringList const &duplicate_img);
