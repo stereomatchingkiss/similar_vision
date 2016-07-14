@@ -44,7 +44,12 @@ private slots:
 
     void on_pb_rt_browse_clicked();
 
+    void on_pb_lf_recycle_clicked();
+
+    void on_pb_rt_recycle_clicked();
+
 private:
+    void delete_img(QString const &name);
     void duplicate_img_select(QModelIndex const &index);
     void enable_folder_edit_ui();
     void enable_image_edit_ui();

@@ -319,3 +319,25 @@ void MainWindow::on_pb_rt_browse_clicked()
 {
     open_folder(get_select_name(1));
 }
+
+void MainWindow::delete_img(QString const &name)
+{
+    if(QFile::remove(name)){
+        duplicate_img_model_->remove_img(name);
+    }else{
+        QMessageBox::warning(this, tr("Error"),
+                             tr("Cannot remove img, it may "
+                                "not exist or occupied by other "
+                                "program"));
+    }
+}
+
+void MainWindow::on_pb_lf_recycle_clicked()
+{
+    delete_img(get_select_name(0));
+}
+
+void MainWindow::on_pb_rt_recycle_clicked()
+{
+    delete_img(get_select_name(1));
+}
