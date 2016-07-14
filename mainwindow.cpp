@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QMessageBox>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QTimer>
 
@@ -262,4 +263,41 @@ void MainWindow::on_pb_down_clicked()
     auto const new_index = folder_model_->index(index.row()+1);
     ui->list_view_folder->setCurrentIndex(new_index);
     enable_folder_edit_ui();
+}
+
+QString MainWindow::get_select_name(int col)
+{
+    auto const index = ui->table_view_similar_pics->currentIndex();
+    if(index.isValid()){
+        auto const new_index = duplicate_img_model_->index(index.row(),col);
+        return duplicate_img_model_->data(new_index, Qt::DisplayRole).toString();
+    }else{
+        return "";
+    }
+}
+
+void MainWindow::move_file(QString const &name)
+{
+    QString const dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                          "",
+                                                          QFileDialog::ShowDirsOnly
+                                                          | QFileDialog::DontResolveSymlinks);
+    if(QFile::rename(name, dir + "/" +
+                     QFileInfo(name).fileName())){
+        duplicate_img_model_->remove_img(name);
+    }else{
+        QMessageBox::warning(this, tr("Error"),
+                             tr("Cannot move the file, it may not exist anymore "
+                                "or accupied by other program"));
+    }
+}
+
+void MainWindow::on_pb_lf_move_clicked()
+{            
+    move_file(get_select_name(0));
+}
+
+void MainWindow::on_pb_rt_move_clicked()
+{
+    move_file(get_select_name(1));
 }
