@@ -18,11 +18,11 @@ QVariant duplicate_img_model::data(const QModelIndex &index, int role) const
     switch(role){
     case Qt::DisplayRole:{
         switch(index.column()){
-        case 0: {
-            return origin_img_[index.row()];
+        case 0: {            
+            return items_.get<0>()[index.row()].origin_img_;
         }
         case 1: {
-            return duplicate_img_[index.row()];
+            return items_.get<0>()[index.row()].duplicate_img_;
         }
         default:{
             return {};
@@ -58,7 +58,7 @@ QVariant duplicate_img_model::headerData(int section, Qt::Orientation orientatio
 
 bool duplicate_img_model::insertRows(int row, int count, const QModelIndex&)
 {
-    if(!origin_img_.isEmpty()){
+    if(!items_.get<0>().empty()){
         beginInsertRows({}, row, row + count - 1);
         endInsertRows();
     }
@@ -76,13 +76,16 @@ bool duplicate_img_model::removeRows(int row, int count, const QModelIndex&)
 
 int duplicate_img_model::rowCount(const QModelIndex&) const
 {
-    return duplicate_img_.size();
+    return static_cast<int>(items_.get<0>().size());
 }
 
 void duplicate_img_model::set_img_set(const QStringList &origin_img, const QStringList &duplicate_img)
 {
-    removeRows(0, origin_img_.size());
-    duplicate_img_ = duplicate_img;
-    origin_img_ = origin_img;
-    insertRows(0, origin_img_.size());
+    removeRows(0, origin_img.size());
+    auto &items = items_.get<0>();
+    items.clear();
+    for(int i = 0; i != origin_img.size(); ++i){
+        items.emplace_back(origin_img[i], duplicate_img[i]);
+    }
+    insertRows(0, origin_img.size());
 }

@@ -1,6 +1,11 @@
 #ifndef DUPLICATE_IMG_MODEL_H
 #define DUPLICATE_IMG_MODEL_H
 
+#include <boost/multi_index_container.hpp>
+#include <boost/multi_index/ordered_index.hpp>
+#include <boost/multi_index/identity.hpp>
+#include <boost/multi_index/member.hpp>
+#include <boost/multi_index/random_access_index.hpp>
 #include <QAbstractTableModel>
 
 class duplicate_img_model : public QAbstractTableModel
@@ -22,10 +27,38 @@ private:
     bool insertRows(int row, int count, const QModelIndex &parent = {}) override;
     bool removeRows(int row, int count, const QModelIndex &parent = {}) override;
 
-    //no efficient for file deletion, should use boost::multi_index
-    //to solve this issue
-    QStringList duplicate_img_;
-    QStringList origin_img_;
+    struct model_items
+    {
+        model_items(QString const &duplicate_img,
+                    QString const &origin_img) :
+            duplicate_img_(duplicate_img),
+            origin_img_(origin_img)
+        {}
+        QString duplicate_img_;
+        QString origin_img_;
+    };
+
+    struct duplicate{};
+    struct origin{};
+
+    // define a multiply indexed set with indices by id and name
+    using items_set = boost::multi_index::multi_index_container
+    <
+        model_items,
+        boost::multi_index::indexed_by<
+            boost::multi_index::random_access<>,
+            boost::multi_index::ordered_non_unique<
+                boost::multi_index::tag<duplicate>,
+                boost::multi_index::member<model_items,QString,&model_items::duplicate_img_>
+            >,
+            boost::multi_index::ordered_non_unique<
+                boost::multi_index::tag<origin>,
+                boost::multi_index::member<model_items,QString,&model_items::origin_img_>
+            >
+        >
+    >;
+
+    items_set items_;
 };
 
 #endif // DUPLICATE_IMG_MODEL_H
