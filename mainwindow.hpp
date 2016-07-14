@@ -40,6 +40,10 @@ private slots:
 
     void on_pb_rt_move_clicked();
 
+    void on_pb_lf_browse_clicked();
+
+    void on_pb_rt_browse_clicked();
+
 private:
     void duplicate_img_select(QModelIndex const &index);
     void enable_folder_edit_ui();
@@ -49,6 +53,7 @@ private:
     void find_similar_pics();
     QString get_select_name(int col);
     void move_file(QString const &name);
+    void open_folder(QString const &name);
     void resizeEvent(QResizeEvent*) override;
     void scan_folders();        
     void view_duplicate_img(QString const &name,

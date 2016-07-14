@@ -301,3 +301,21 @@ void MainWindow::on_pb_rt_move_clicked()
 {
     move_file(get_select_name(1));
 }
+
+void MainWindow::open_folder(QString const &name)
+{
+    QFileDialog dialog;
+    dialog.setFileMode(QFileDialog::ExistingFiles);
+    dialog.setDirectory(QFileInfo(name).absoluteDir());
+    dialog.exec();
+}
+
+void MainWindow::on_pb_lf_browse_clicked()
+{
+    open_folder(get_select_name(0));
+}
+
+void MainWindow::on_pb_rt_browse_clicked()
+{
+    open_folder(get_select_name(1));
+}
