@@ -306,8 +306,14 @@ void MainWindow::open_folder(QString const &name)
 {
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::ExistingFiles);
-    dialog.setDirectory(QFileInfo(name).absoluteDir());
-    dialog.exec();
+    auto const dir_path = QFileInfo(name).absoluteDir();
+    if(QFile::exists(dir_path.currentPath())){
+        dialog.setDirectory(dir_path);
+        dialog.exec();
+    }else{
+        QMessageBox::warning(this, tr("Error"),
+                             tr("Cannot open dialog do not exist"));
+    }
 }
 
 void MainWindow::on_pb_lf_browse_clicked()
