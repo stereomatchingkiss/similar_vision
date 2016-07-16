@@ -5,6 +5,7 @@
 #include <ocv_libs/profile/measure.hpp>
 
 #include <QtConcurrent/QtConcurrentMap>
+#include <QtConcurrent/QtConcurrentRun>
 #include <QDebug>
 
 #include <opencv2/core/ocl.hpp>
@@ -13,9 +14,7 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/depth_first_search.hpp>
 
-#include <atomic>
 #include <iostream>
-#include <mutex>
 
 namespace{
 
@@ -84,7 +83,7 @@ std::vector<edges_type> create_edges(Graph const &graph)
 {
     std::vector<edges_type> edges;
     dfs_visitor vis(edges);
-    boost::depth_first_search(graph, boost::visitor(vis));    
+    boost::depth_first_search(graph, boost::visitor(vis));
 
     return edges;
 }
@@ -97,7 +96,10 @@ pics_find_img_hash(cv::Ptr<cv::img_hash::ImgHashBase> algo,
                    QObject *parent) :
     QThread(parent),
     abs_file_path_(abs_file_path),
-    algo_(algo)
+    algo_(algo),
+    finished_(false),
+    pool_size_(QThread::idealThreadCount() > 2 ?
+                   QThread::idealThreadCount() - 2 : 1)
 {
     cv::ocl::setUseOpenCL(false);
 }
@@ -171,13 +173,69 @@ void pics_find_img_hash::compute_hash_mt()
     QtConcurrent::blockingMap(abs_file_path_, compute_hash);//*/
 }
 
+void pics_find_img_hash::compute_hash_mt2()
+{
+    hash_arr_.clear();
+    hash_arr_.reserve(abs_file_path_.size());
+    int process_size = 0;
+    auto process_func = [&](cv::Mat const &img, int i)
+    {
+        cv::Mat hash;
+        cv::img_hash::averageHash(img, hash);
+        {
+            bool const img_empty = img.empty();
+            if(!img_empty){
+                cv::img_hash::averageHash(img, hash);
+            }
+            std::lock_guard<std::mutex> lk(mutex_);
+            if(!img_empty){
+                //algo_->compute(img, hash);
+                hash_arr_.emplace_back(abs_file_path_[i], hash);
+            }
+            ++process_size;
+            emit progress("Image preprocess : " +
+                          QString("%1").arg(process_size));
+            if(process_size == abs_file_path_.size()){
+                finished_ = true;
+                cv_.notify_one();
+            }
+        }
+    };
+
+    for(int i = 0; i != abs_file_path_.size(); ++i){
+        auto const img = cv::imread(abs_file_path_[i].toStdString());
+        QtConcurrent::run(QThreadPool::globalInstance(), process_func, img, i);
+    }
+
+    std::unique_lock<std::mutex> lk(mutex_);
+    cv_.wait(lk, [this](){return finished_;});
+}
+
 void pics_find_img_hash::run()
 {    
-    abs_file_path_.sort();
+    if(!abs_file_path_.isEmpty()){
+        abs_file_path_.sort();
+        abs_file_path_.removeDuplicates();
+        elapsed_time_.start();
+        if(pool_size_ > 1){
+            compute_hash_mt2();
+            qDebug()<<"compute hash mt2(ms) : "<<elapsed_time_.elapsed();
+        }else{
+            compute_hash();
+            qDebug()<<"compute hash(ms) : "<<elapsed_time_.elapsed();
+        }
+        elapsed_time_.restart();
+        compare_hash();
+        qDebug()<<"compare hash consume(ms) : "<<elapsed_time_.elapsed();
+    }
+
+    emit end();//*/
+
+    /*abs_file_path_.sort();
     abs_file_path_.removeDuplicates();
-    qDebug()<<"compute hash mt(ms) : "<<profiler::execution([this](){compute_hash_mt();});
-    //qDebug()<<"compute hash(ms) : "<<profiler::execution([this](){compute_hash();});
+    //qDebug()<<"compute hash mt(ms) : "<<profiler::execution([this](){compute_hash_mt();});
+    qDebug()<<"compute hash(ms) : "<<profiler::execution([this](){compute_hash();});
     qDebug()<<"compare hash(ms) : "<<profiler::execution([this](){compare_hash();});
 
-    emit end();
+    emit end();//*/
 }

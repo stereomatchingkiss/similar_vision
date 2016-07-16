@@ -1,13 +1,17 @@
 #ifndef PICS_FIND_IMG_HASH_HPP
 #define PICS_FIND_IMG_HASH_HPP
 
+#include <QElapsedTimer>
 #include <QThread>
 
 #include <opencv2/img_hash.hpp>
-//#include <opencv2/flann.hpp>
 
+#include <atomic>
+#include <condition_variable>
 #include <map>
-#include <tuple>
+#include <mutex>
+
+class img_reader;
 
 class pics_find_img_hash : public QThread
 {
@@ -25,19 +29,27 @@ signals:
     void end();
     void progress(QString msg);
 
-private:    
-    //Exist single thread and multi thread versions for performance measurement
+private:        
     void compare_hash();
-    void compute_hash();
+
+    //Different versions of compute hash functions exist for performance
+    //measurement
+    void compute_hash();    
     void compute_hash_mt();
+    void compute_hash_mt2();
 
     void run() override;
 
     QStringList abs_file_path_;
     cv::Ptr<cv::img_hash::ImgHashBase> algo_;
+    std::condition_variable cv_;
     QStringList duplicate_img_;
-    std::vector<std::pair<QString, cv::Mat>> hash_arr_;
+    QElapsedTimer elapsed_time_;
+    bool finished_;
+    std::vector<std::pair<QString, cv::Mat>> hash_arr_;    
+    std::mutex mutex_;
     QStringList original_img_;
+    int const pool_size_;
 };
 
 #endif // FIND_SIMILAR_PICS_HPP
