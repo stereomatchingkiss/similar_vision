@@ -10,6 +10,7 @@ class scan_folder : public QThread
     Q_OBJECT
 public:
     explicit scan_folder(QStringList const &abs_dirs,
+                         QStringList const &scan_types,
                          bool scan_subfolders = true,
                          QObject *parent = nullptr);
 
@@ -29,6 +30,7 @@ private:
     QStringList abs_dirs_;
     QStringList files_;
     bool scan_subfolders_;
+    QStringList scan_types_;
 };
 
 #endif // SCAN_FOLDER_HPP

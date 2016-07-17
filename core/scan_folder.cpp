@@ -10,11 +10,13 @@
 #include <set>
 
 scan_folder::scan_folder(QStringList const &abs_dirs,
+                         QStringList const &scan_types,
                          bool scan_subfolders,
                          QObject *parent) :
     QThread(parent),
     abs_dirs_(abs_dirs),
-    scan_subfolders_(scan_subfolders)
+    scan_subfolders_(scan_subfolders),
+    scan_types_(scan_types)
 {
 
 }
@@ -59,9 +61,10 @@ void scan_folder::scan_folders()
         }
     };
 
-    std::set<QString, icp> const is_img
-    {"bmp", "jpeg", "jpg", "png", "pbm", "pgm",
-        "ppm", "tiff", "webp"};
+    std::set<QString, icp> is_img;
+    for(auto const &type : scan_types_){
+        is_img.insert(type);
+    }
 
     emit progress("Total files found : 0");
     for(auto const &dir : abs_dirs_){

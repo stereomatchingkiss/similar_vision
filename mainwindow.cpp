@@ -79,6 +79,7 @@ void MainWindow::on_pb_add_folder_clicked()
 void MainWindow::scan_folders()
 {
     scf_thread_ = new scan_folder(folder_model_->stringList(),
+                                  basic_settings_->scan_img_type(),
                                   ui->cb_scan_subdir->isChecked(), this);
     connect(scf_thread_, &scan_folder::progress, ui->label_info, &QLabel::setText);
     connect(scf_thread_, &scan_folder::end, this, &MainWindow::find_similar_pics);
