@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     model/folder_model.cpp \
     core/scan_folder.cpp \
     core/pics_find_img_hash.cpp \
-    model/duplicate_img_model.cpp
+    model/duplicate_img_model.cpp \
+    ui/basic_setting_dialog.cpp
 
 HEADERS  += mainwindow.hpp \
     ui/paint_custom_words.hpp \
@@ -33,9 +34,11 @@ HEADERS  += mainwindow.hpp \
     core/scan_folder.hpp \
     core/pics_find_img_hash.hpp \
     core/vp_tree.hpp \
-    model/duplicate_img_model.hpp
+    model/duplicate_img_model.hpp \
+    ui/basic_setting_dialog.hpp
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    ui/basic_setting_dialog.ui
 
 RESOURCES += \
     pics.qrc
