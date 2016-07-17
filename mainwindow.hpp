@@ -51,6 +51,12 @@ private slots:
 
     void on_action_basic_setting_triggered();
 
+    void on_action_exit_triggered();
+
+    void on_action_qt_triggered();
+
+    void on_action_fatcow_triggered();
+
 private:
     void delete_img(QString const &name);
     void duplicate_img_select(QModelIndex const &index);

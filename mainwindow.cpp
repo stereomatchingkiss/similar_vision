@@ -380,3 +380,20 @@ void MainWindow::on_action_basic_setting_triggered()
 {
     basic_settings_->exec();
 }
+
+void MainWindow::on_action_exit_triggered()
+{
+    close();
+}
+
+void MainWindow::on_action_qt_triggered()
+{
+    QMessageBox::aboutQt(this);
+}
+
+void MainWindow::on_action_fatcow_triggered()
+{
+    QMessageBox::information(this, tr("Source"),
+                             tr("The icons are come from http://www.fatcow."
+                                "com/free-icons"));
+}
