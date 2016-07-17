@@ -60,9 +60,8 @@ void scan_folder::scan_folders()
     };
 
     std::set<QString, icp> const is_img
-    {"bmp", "dib", "jpeg", "jpg", "jpe",
-        "jp2", "png", "webp", "pbm", "pgm", "ppm",
-        "sr," "ras", "tiff", "tif"};
+    {"bmp", "jpeg", "jpg", "png", "pbm", "pgm",
+        "ppm", "tiff", "webp"};
 
     emit progress("Total files found : 0");
     for(auto const &dir : abs_dirs_){
