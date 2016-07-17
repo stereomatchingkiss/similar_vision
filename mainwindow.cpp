@@ -361,6 +361,8 @@ void MainWindow::remove_img_from_table(QString const &name)
     }else{
         ui->gp_view_lf->scene()->clear();
         ui->gp_view_rt->scene()->clear();
+        ui->lb_left_pic->clear();
+        ui->lb_right_pic->clear();
     }
 }
 
