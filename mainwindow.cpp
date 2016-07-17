@@ -283,8 +283,8 @@ void MainWindow::move_file(QString const &name)
                                                           QFileDialog::ShowDirsOnly
                                                           | QFileDialog::DontResolveSymlinks);
     if(QFile::rename(name, dir + "/" +
-                     QFileInfo(name).fileName())){
-        duplicate_img_model_->remove_img(name);
+                     QFileInfo(name).fileName())){        
+        remove_img_from_table(name);
     }else{
         QMessageBox::warning(this, tr("Error"),
                              tr("Cannot move the file, it may not exist anymore "
@@ -326,10 +326,35 @@ void MainWindow::on_pb_rt_browse_clicked()
     open_folder(get_select_name(1));
 }
 
+void MainWindow::remove_img_from_table(QString const &name)
+{
+    int const cur_index = ui->table_view_similar_pics->currentIndex().row();
+    duplicate_img_model_->remove_img(name);
+    int const row_count = duplicate_img_model_->rowCount();
+    if(row_count > 1){
+        auto index = duplicate_img_model_->index(cur_index + 1, 0);
+        if(index.isValid()){
+            ui->table_view_similar_pics->setCurrentIndex(index);
+            duplicate_img_select(index);
+        }else{
+            index = duplicate_img_model_->index(row_count-1, 0);
+            ui->table_view_similar_pics->setCurrentIndex(index);
+            duplicate_img_select(index);
+        }
+    }else if(row_count == 1){
+        auto const index = duplicate_img_model_->index(0, 0);
+        ui->table_view_similar_pics->setCurrentIndex(index);
+        duplicate_img_select(index);
+    }else{
+        ui->gp_view_lf->scene()->clear();
+        ui->gp_view_rt->scene()->clear();
+    }
+}
+
 void MainWindow::delete_img(QString const &name)
 {
     if(QFile::remove(name)){
-        duplicate_img_model_->remove_img(name);
+        remove_img_from_table(name);
     }else{
         QMessageBox::warning(this, tr("Error"),
                              tr("Cannot remove img, it may "

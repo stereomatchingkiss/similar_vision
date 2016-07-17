@@ -59,6 +59,7 @@ private:
     QString get_select_name(int col);
     void move_file(QString const &name);
     void open_folder(QString const &name);
+    void remove_img_from_table(QString const &name);
     void resizeEvent(QResizeEvent*) override;
     void scan_folders();        
     void view_duplicate_img(QString const &name,
@@ -75,7 +76,7 @@ private:
     QString pre_img_name_lf_;
     QString pre_img_name_rt_;
     scan_folder *scf_thread_;
-    QTimer *timer_;
+    QTimer *timer_;    
 };
 
 #endif // MAINWINDOW_HPP
