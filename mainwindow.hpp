@@ -14,6 +14,7 @@ class duplicate_img_model;
 class folder_model;
 class pics_find_img_hash;
 class scan_folder;
+class basic_setting_dialog;
 
 class MainWindow : public QMainWindow
 {
@@ -48,6 +49,8 @@ private slots:
 
     void on_pb_rt_recycle_clicked();
 
+    void on_action_basic_setting_triggered();
+
 private:
     void delete_img(QString const &name);
     void duplicate_img_select(QModelIndex const &index);
@@ -68,6 +71,7 @@ private:
 
     Ui::MainWindow *ui;
 
+    basic_setting_dialog *basic_settings_;
     duplicate_img_model *duplicate_img_model_;
     folder_model *folder_model_;
     pics_find_img_hash *pf_img_hash_;
@@ -75,7 +79,7 @@ private:
     bool img_rt_changed_;
     QString pre_img_name_lf_;
     QString pre_img_name_rt_;
-    scan_folder *scf_thread_;
+    scan_folder *scf_thread_;    
     QTimer *timer_;    
 };
 

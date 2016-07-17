@@ -5,6 +5,7 @@
 #include "core/scan_folder.hpp"
 #include "model/duplicate_img_model.hpp"
 #include "model/folder_model.hpp"
+#include "ui/basic_setting_dialog.hpp"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -19,12 +20,13 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    duplicate_img_model_(new duplicate_img_model(parent)),
-    folder_model_(new folder_model(parent)),
+    basic_settings_(new basic_setting_dialog(this)),
+    duplicate_img_model_(new duplicate_img_model(this)),
+    folder_model_(new folder_model(this)),
     img_lf_changed_(false),
     img_rt_changed_(false),
     pf_img_hash_(nullptr),
-    scf_thread_(nullptr),
+    scf_thread_(nullptr),    
     timer_(new QTimer(this))
 {
     ui->setupUi(this);
@@ -371,4 +373,9 @@ void MainWindow::on_pb_lf_recycle_clicked()
 void MainWindow::on_pb_rt_recycle_clicked()
 {
     delete_img(get_select_name(1));
+}
+
+void MainWindow::on_action_basic_setting_triggered()
+{
+    basic_settings_->exec();
 }
