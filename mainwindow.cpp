@@ -241,6 +241,16 @@ void MainWindow::view_duplicate_img(const QString &name,
     if(img_changed){
         QImage img(name);
         if(!img.isNull()){
+            auto const suffix = QFileInfo(name).suffix();
+            auto const img_info =
+                    QString("%1 %2x%3 %4KB").arg(suffix).
+                    arg(img.width()).arg(img.height()).
+                    arg(qRound(QFile(name).size()/1024.0));
+            if(view == ui->gp_view_lf){
+                 ui->lb_left_pic->setText(img_info);
+            }else{
+                 ui->lb_right_pic->setText(img_info);
+            }
             view->scene()->clear();
             view->scene()->addPixmap(QPixmap::fromImage(img));
             view->fitInView(view->scene()->itemsBoundingRect(),
@@ -249,7 +259,7 @@ void MainWindow::view_duplicate_img(const QString &name,
     }else{
         view->fitInView(view->scene()->itemsBoundingRect(),
                         Qt::KeepAspectRatio);
-    }
+    }       
 }
 
 void MainWindow::on_pb_up_clicked()
