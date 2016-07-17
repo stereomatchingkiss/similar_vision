@@ -39,3 +39,32 @@ basic_setting_dialog::~basic_setting_dialog()
 
     delete ui;
 }
+
+bool basic_setting_dialog::auto_update() const
+{
+    return ui->cb_auto_update->isChecked();
+}
+
+bool basic_setting_dialog::perfect_match() const
+{
+    return ui->cb_perfect_match->isChecked();
+}
+
+QStringList basic_setting_dialog::scan_img_type() const
+{
+    QStringList types;
+    std::vector<std::pair<QString, QCheckBox*>> const mapper
+    {
+        {"bmp", ui->cb_bmp}, {"jpeg", ui->cb_jpeg},
+        {"pbm", ui->cb_pbm}, {"pgm", ui->cb_pgm},
+        {"png", ui->cb_png}, {"ppm", ui->cb_ppm},
+        {"tiff", ui->cb_tiff}, {"webp", ui->cb_webp}
+    };
+    for(auto const &pair : mapper){
+        if(pair.second->isChecked()){
+            types.push_back(pair.first);
+        }
+    }
+
+    return types;
+}

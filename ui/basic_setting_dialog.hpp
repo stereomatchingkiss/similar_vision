@@ -20,6 +20,10 @@ public:
     explicit basic_setting_dialog(QWidget *parent = 0);
     ~basic_setting_dialog();
 
+    bool auto_update() const;
+    bool perfect_match() const;
+    QStringList scan_img_type() const;
+
 private:
     Ui::basic_setting_dialog *ui;
 
