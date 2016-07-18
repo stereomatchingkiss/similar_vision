@@ -82,8 +82,7 @@ void MainWindow::scan_folders()
                                   basic_settings_->scan_img_type(),
                                   ui->cb_scan_subdir->isChecked(), this);
     connect(scf_thread_, &scan_folder::progress, ui->label_info, &QLabel::setText);
-    connect(scf_thread_, &scan_folder::end, this, &MainWindow::find_similar_pics);
-    connect(scf_thread_, &scan_folder::finished, scf_thread_, &QObject::deleteLater);
+    connect(scf_thread_, &scan_folder::finished, this, &MainWindow::find_similar_pics);
     setEnabled(false);
     scf_thread_->start();
 }
@@ -100,12 +99,22 @@ void MainWindow::find_similar_pics()
     pf_img_hash_ = new pics_find_img_hash(AverageHash::create(),
                                           scf_thread_->get_abs_file_path(),
                                           this);
+    scf_thread_->deleteLater();
 
     connect(pf_img_hash_, &pics_find_img_hash::progress, ui->label_info, &QLabel::setText);
-    connect(pf_img_hash_, &pics_find_img_hash::end, this, &MainWindow::enable_main_ui);
-    connect(pf_img_hash_, &pics_find_img_hash::finished, pf_img_hash_, &QObject::deleteLater);
+    connect(pf_img_hash_, &pics_find_img_hash::finished, this, &MainWindow::find_similar_pics_end);
 
     pf_img_hash_->start();
+}
+
+void MainWindow::find_similar_pics_end()
+{
+    pf_img_hash_->deleteLater();
+    enable_main_ui();
+    QMessageBox::information(this, tr("Information"),
+                             tr("Search finished.\n\n"
+                                "Similar images pair found : %1\n").
+                             arg(duplicate_img_model_->rowCount()));
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

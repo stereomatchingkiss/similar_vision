@@ -65,6 +65,7 @@ private:
     void enable_main_ui();
     void enable_up_down_arrow(int item_size, int select_size);
     void find_similar_pics();
+    void find_similar_pics_end();
     QString get_select_name(int col);
     void move_file(QString const &name);
     void open_folder(QString const &name);
