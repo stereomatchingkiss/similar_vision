@@ -71,7 +71,7 @@ private:
     void remove_img_from_table(QString const &name);
     void resizeEvent(QResizeEvent*) override;
     void scan_folders();        
-    void view_duplicate_img(QString const &name,
+    bool view_duplicate_img(QString const &name,
                             bool img_read,
                             QGraphicsView *view);
 

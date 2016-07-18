@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     img_lf_changed_(false),
     img_rt_changed_(false),
     pf_img_hash_(nullptr),
-    scf_thread_(nullptr),    
+    scf_thread_(nullptr),
     timer_(new QTimer(this))
 {
     ui->setupUi(this);
@@ -226,15 +226,22 @@ void MainWindow::duplicate_img_select(QModelIndex const &index)
     img_rt_changed_ = pre_img_name_rt_ != img_name_rt ? true : false;
     pre_img_name_lf_ = img_name_lf;
     pre_img_name_rt_ = img_name_rt;
-    view_duplicate_img(pre_img_name_lf_,
-                       img_lf_changed_,
-                       ui->gp_view_lf);
-    view_duplicate_img(pre_img_name_rt_,
-                       img_rt_changed_,
-                       ui->gp_view_rt);
+    bool can_view = view_duplicate_img(pre_img_name_lf_,
+                                       img_lf_changed_,
+                                       ui->gp_view_lf);
+    if(!can_view){
+        QMessageBox::warning(this, tr("Error"), tr("Cannot open image %1").arg(img_name_lf));
+        return;
+    }
+    can_view = view_duplicate_img(pre_img_name_rt_,
+                                  img_rt_changed_,
+                                  ui->gp_view_rt);
+    if(!can_view){
+        QMessageBox::warning(this, tr("Error"), tr("Cannot open image %1").arg(img_name_rt));
+    }
 }
 
-void MainWindow::view_duplicate_img(const QString &name,
+bool MainWindow::view_duplicate_img(const QString &name,
                                     bool img_changed,
                                     QGraphicsView *view)
 {
@@ -247,19 +254,23 @@ void MainWindow::view_duplicate_img(const QString &name,
                     arg(img.width()).arg(img.height()).
                     arg(qRound(QFile(name).size()/1024.0));
             if(view == ui->gp_view_lf){
-                 ui->lb_left_pic->setText(img_info);
+                ui->lb_left_pic->setText(img_info);
             }else{
-                 ui->lb_right_pic->setText(img_info);
+                ui->lb_right_pic->setText(img_info);
             }
             view->scene()->clear();
             view->scene()->addPixmap(QPixmap::fromImage(img));
             view->fitInView(view->scene()->itemsBoundingRect(),
                             Qt::KeepAspectRatio);
+        }else{
+            return false;
         }
     }else{
         view->fitInView(view->scene()->itemsBoundingRect(),
                         Qt::KeepAspectRatio);
-    }       
+    }
+
+    return true;
 }
 
 void MainWindow::on_pb_up_clicked()
@@ -296,7 +307,7 @@ void MainWindow::move_file(QString const &name)
                                                           QFileDialog::ShowDirsOnly
                                                           | QFileDialog::DontResolveSymlinks);
     if(QFile::rename(name, dir + "/" +
-                     QFileInfo(name).fileName())){        
+                     QFileInfo(name).fileName())){
         remove_img_from_table(name);
     }else{
         QMessageBox::warning(this, tr("Error"),
