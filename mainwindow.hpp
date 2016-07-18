@@ -3,12 +3,14 @@
 
 #include <QMainWindow>
 
+#include <memory>
+
 namespace Ui {
 class MainWindow;
 }
 
 class QGraphicsView;
-class QTimer;
+class QElapsedTimer;
 
 class duplicate_img_model;
 class folder_model;
@@ -71,7 +73,8 @@ private:
     void open_folder(QString const &name);
     void remove_img_from_table(QString const &name);
     void resizeEvent(QResizeEvent*) override;
-    void scan_folders();        
+    void scan_folders();
+    void set_label_info(QString info);
     bool view_duplicate_img(QString const &name,
                             bool img_read,
                             QGraphicsView *view);
@@ -87,7 +90,7 @@ private:
     QString pre_img_name_lf_;
     QString pre_img_name_rt_;
     scan_folder *scf_thread_;    
-    QTimer *timer_;    
+    std::unique_ptr<QElapsedTimer> timer_;
 };
 
 #endif // MAINWINDOW_HPP

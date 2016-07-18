@@ -13,7 +13,7 @@
 #include <QGraphicsView>
 #include <QMessageBox>
 #include <QtConcurrent/QtConcurrentRun>
-#include <QTimer>
+#include <QElapsedTimer>
 
 #include <opencv2/highgui.hpp>
 
@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     img_rt_changed_(false),
     pf_img_hash_(nullptr),
     scf_thread_(nullptr),
-    timer_(new QTimer(this))
+    timer_(new QElapsedTimer)
 {
     ui->setupUi(this);
     ui->list_view_folder->setModel(folder_model_);
@@ -77,14 +77,28 @@ void MainWindow::on_pb_add_folder_clicked()
 }
 
 void MainWindow::scan_folders()
-{
+{        
+    timer_->restart();
     scf_thread_ = new scan_folder(folder_model_->stringList(),
                                   basic_settings_->scan_img_type(),
                                   ui->cb_scan_subdir->isChecked(), this);
-    connect(scf_thread_, &scan_folder::progress, ui->label_info, &QLabel::setText);
+    connect(scf_thread_, &scan_folder::progress, this, &MainWindow::set_label_info);
     connect(scf_thread_, &scan_folder::finished, this, &MainWindow::find_similar_pics);
     setEnabled(false);
     scf_thread_->start();
+}
+
+void MainWindow::set_label_info(QString info)
+{
+    int const total_sec = timer_->elapsed() / 1000;
+    int const min = (total_sec / 60)%60;
+    int const hour = total_sec / 3600;
+    int const sec = total_sec % 60;
+    auto const elapsed = QString("%1:%2:%3").arg(hour, 2, 10, QChar('0')).
+            arg(min, 2, 10, QChar('0')).
+            arg(sec, 2, 10, QChar('0'));
+    ui->label_info->setText(QString("%1, Elapsed time : %2").arg(info).
+                            arg(elapsed));
 }
 
 void MainWindow::on_pb_find_folder_clicked()
@@ -101,7 +115,7 @@ void MainWindow::find_similar_pics()
                                           this);
     scf_thread_->deleteLater();
 
-    connect(pf_img_hash_, &pics_find_img_hash::progress, ui->label_info, &QLabel::setText);
+    connect(pf_img_hash_, &pics_find_img_hash::progress, this, &MainWindow::set_label_info);
     connect(pf_img_hash_, &pics_find_img_hash::finished, this, &MainWindow::find_similar_pics_end);
 
     pf_img_hash_->start();
