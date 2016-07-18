@@ -1,6 +1,7 @@
 #include "basic_setting_dialog.hpp"
 #include "ui_basic_setting_dialog.h"
 
+#include <QDebug>
 #include <QSettings>
 #include <QVariant>
 
@@ -27,6 +28,22 @@ basic_setting_dialog::basic_setting_dialog(QWidget *parent) :
             pair.second->setChecked(settings.value(pair.first).toBool());
         }
     }
+
+    origin_state_.emplace_back(ui->cb_bmp->isChecked(), ui->cb_bmp);
+    origin_state_.emplace_back(ui->cb_jpeg->isChecked(), ui->cb_jpeg);
+    origin_state_.emplace_back(ui->cb_pbm->isChecked(), ui->cb_pbm);
+    origin_state_.emplace_back(ui->cb_pgm->isChecked(), ui->cb_pgm);
+    origin_state_.emplace_back(ui->cb_png->isChecked(), ui->cb_png);
+    origin_state_.emplace_back(ui->cb_ppm->isChecked(), ui->cb_ppm);
+    origin_state_.emplace_back(ui->cb_tiff->isChecked(), ui->cb_tiff);
+    origin_state_.emplace_back(ui->cb_webp->isChecked(), ui->cb_webp);
+    origin_state_.emplace_back(ui->cb_perfect_match->isChecked(), ui->cb_perfect_match);
+    origin_state_.emplace_back(ui->cb_auto_update->isChecked(), ui->cb_auto_update);
+
+    connect(ui->buttonBox, &QDialogButtonBox::accepted,
+            this, &basic_setting_dialog::ok_clicked);
+    connect(ui->buttonBox, &QDialogButtonBox::rejected,
+            this, &basic_setting_dialog::cancel_clicked);
 }
 
 basic_setting_dialog::~basic_setting_dialog()
@@ -68,4 +85,20 @@ QStringList basic_setting_dialog::scan_img_type() const
     }
 
     return types;
+}
+
+void basic_setting_dialog::cancel_clicked()
+{
+    for(auto &pair : origin_state_){
+        pair.second->setChecked(pair.first);
+    }
+    close();
+}
+
+void basic_setting_dialog::ok_clicked()
+{
+    qDebug()<<"ok clicked";
+    for(auto &pair : origin_state_){
+        pair.first = pair.second->isChecked();
+    }
 }

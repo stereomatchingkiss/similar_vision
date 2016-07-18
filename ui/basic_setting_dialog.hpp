@@ -10,6 +10,7 @@ namespace Ui {
 class basic_setting_dialog;
 }
 
+class QAbstractButton;
 class QCheckBox;
 
 class basic_setting_dialog : public QDialog
@@ -25,9 +26,13 @@ public:
     QStringList scan_img_type() const;
 
 private:
+    void cancel_clicked();
+    void ok_clicked();
+
     Ui::basic_setting_dialog *ui;
 
     std::vector<std::pair<QString, QCheckBox*>> check_box_settings_;
+    std::vector<std::pair<bool, QCheckBox*>> origin_state_;
 };
 
 #endif // BASIC_SETTING_DIALOG_HPP
