@@ -13,11 +13,11 @@ TARGET = similar_vision
 TEMPLATE = app
 
 INCLUDEPATH += ui
-INCLUDEPATH += ../
+#INCLUDEPATH += ../
 
 include(../pri/boost.pri)
 include(../pri/cv_dev.pri)
-
+include(../pri/qwt.pri)
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     core/scan_folder.cpp \
     core/pics_find_img_hash.cpp \
     model/duplicate_img_model.cpp \
-    ui/basic_setting_dialog.cpp
+    ui/basic_setting_dialog.cpp \
+    ui/advance_setting_dialog.cpp \
+    ui/single_bar_plot.cpp
 
 HEADERS  += mainwindow.hpp \
     ui/paint_custom_words.hpp \
@@ -35,10 +37,13 @@ HEADERS  += mainwindow.hpp \
     core/pics_find_img_hash.hpp \
     core/vp_tree.hpp \
     model/duplicate_img_model.hpp \
-    ui/basic_setting_dialog.hpp
+    ui/basic_setting_dialog.hpp \
+    ui/advance_setting_dialog.hpp \
+    ui/single_bar_plot.hpp
 
 FORMS    += mainwindow.ui \
-    ui/basic_setting_dialog.ui
+    ui/basic_setting_dialog.ui \
+    ui/advance_setting_dialog.ui
 
 RESOURCES += \
     pics.qrc
