@@ -1,5 +1,5 @@
-#ifndef DUPLICATE_IMG_MODEL_H
-#define DUPLICATE_IMG_MODEL_H
+#ifndef DUPLICATE_IMG_MODEL_HPP
+#define DUPLICATE_IMG_MODEL_HPP
 
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/ordered_index.hpp>
@@ -13,6 +13,8 @@ class duplicate_img_model : public QAbstractTableModel
     Q_OBJECT
 public:    
     explicit duplicate_img_model(QObject *parent = nullptr);
+
+    void clear();
 
     int columnCount(const QModelIndex &parent) const override;
     QVariant data(const QModelIndex &index, int role) const override;
@@ -62,4 +64,4 @@ private:
     items_set items_;
 };
 
-#endif // DUPLICATE_IMG_MODEL_H
+#endif // DUPLICATE_IMG_MODEL_HPP

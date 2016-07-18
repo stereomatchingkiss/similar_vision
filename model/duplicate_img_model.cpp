@@ -8,6 +8,11 @@ duplicate_img_model::duplicate_img_model(QObject *parent) :
 
 }
 
+void duplicate_img_model::clear()
+{
+    set_img_set({}, {});
+}
+
 int duplicate_img_model::columnCount(const QModelIndex&) const
 {
     return 2;
