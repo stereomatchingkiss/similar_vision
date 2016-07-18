@@ -78,6 +78,9 @@ void MainWindow::on_pb_add_folder_clicked()
 
 void MainWindow::scan_folders()
 {        
+    duplicate_img_model_->clear();
+    ui->gp_view_lf->scene()->clear();
+    ui->gp_view_rt->scene()->clear();
     timer_->restart();
     scf_thread_ = new scan_folder(folder_model_->stringList(),
                                   basic_settings_->scan_img_type(),
