@@ -181,25 +181,25 @@ void pics_find_img_hash::compute_hash_mt2()
     auto process_func = [&](cv::Mat const &img, int i)
     {
         cv::Mat hash;
-        cv::img_hash::averageHash(img, hash);
+        bool const img_empty = img.empty();
+        int size = 0;
         {
-            bool const img_empty = img.empty();
-            if(!img_empty){
-                cv::img_hash::averageHash(img, hash);
-            }
             std::lock_guard<std::mutex> lk(mutex_);
             if(!img_empty){
-                //algo_->compute(img, hash);
+                algo_->compute(img, hash);
                 hash_arr_.emplace_back(abs_file_path_[i], hash);
             }
+            size = process_size + 1;
             ++process_size;
-            emit progress("Image preprocess : " +
-                          QString("%1").arg(process_size));
-            if(process_size == abs_file_path_.size()){
-                finished_ = true;
-                cv_.notify_one();
-            }
         }
+        emit progress("Image preprocess : " +
+                      QString("%1/%2").arg(size).
+                      arg(abs_file_path_.size()));
+        if(size == abs_file_path_.size()){
+            finished_ = true;
+            cv_.notify_one();
+        }
+
     };
 
     for(int i = 0; i != abs_file_path_.size(); ++i){
