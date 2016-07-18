@@ -2,8 +2,6 @@
 
 #include "vp_tree.hpp"
 
-#include <ocv_libs/profile/measure.hpp>
-
 #include <QtConcurrent/QtConcurrentMap>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QDebug>
@@ -17,8 +15,6 @@
 #include <iostream>
 
 namespace{
-
-using profiler = ocv::time::measure<std::chrono::milliseconds>;
 
 using graph_type = boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS>;
 using edges_type = graph_type::edge_descriptor;
@@ -119,8 +115,7 @@ void pics_find_img_hash::compare_hash()
     using value_type = norm_hamming_dist::value_type;
 
     vp_tree<value_type, norm_hamming_dist> hamming_tree;
-    qDebug()<<"norm ham vp create : "<<
-              profiler::execution([&](){hamming_tree.create(std::move(hash_arr_));});
+    hamming_tree.create(std::move(hash_arr_));
 
     auto const graph = create_graph(hamming_tree,
                                     abs_file_path_.size(), 10);
