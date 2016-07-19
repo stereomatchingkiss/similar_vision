@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     model/duplicate_img_model.cpp \
     ui/basic_setting_dialog.cpp \
     ui/advance_setting_dialog.cpp \
-    ui/single_bar_plot.cpp
+    ui/single_bar_plot.cpp \
+    ui/duplicate_img_table_view.cpp
 
 HEADERS  += mainwindow.hpp \
     ui/paint_custom_words.hpp \
@@ -39,7 +40,8 @@ HEADERS  += mainwindow.hpp \
     model/duplicate_img_model.hpp \
     ui/basic_setting_dialog.hpp \
     ui/advance_setting_dialog.hpp \
-    ui/single_bar_plot.hpp
+    ui/single_bar_plot.hpp \
+    ui/duplicate_img_table_view.hpp
 
 FORMS    += mainwindow.ui \
     ui/basic_setting_dialog.ui \

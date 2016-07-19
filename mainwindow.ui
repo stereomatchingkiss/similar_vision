@@ -378,7 +378,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QTableView" name="table_view_similar_pics">
+      <widget class="duplicate_img_table_view" name="table_view_similar_pics">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -395,11 +395,6 @@
      </widget>
     </item>
    </layout>
-   <zorder>table_view_similar_pics</zorder>
-   <zorder>gb_right_pic</zorder>
-   <zorder>gb_right_pic</zorder>
-   <zorder>groupBox_2</zorder>
-   <zorder>groupBox_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -496,6 +491,11 @@
    <class>paint_custom_words</class>
    <extends>QListView</extends>
    <header location="global">paint_custom_words.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>duplicate_img_table_view</class>
+   <extends>QTableView</extends>
+   <header>duplicate_img_table_view.hpp</header>
   </customwidget>
  </customwidgets>
  <resources>

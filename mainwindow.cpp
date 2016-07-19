@@ -57,6 +57,14 @@ MainWindow::MainWindow(QWidget *parent) :
             this, &MainWindow::enable_folder_edit_ui);
     connect(ui->table_view_similar_pics, &QTableView::clicked,
             this, &MainWindow::duplicate_img_select);
+    connect(ui->table_view_similar_pics, &duplicate_img_table_view::key_press,
+            [this](int)
+    {
+        auto const index = ui->table_view_similar_pics->currentIndex();
+        if(index.isValid()){
+            duplicate_img_select(index);
+        }
+    });
 }
 
 MainWindow::~MainWindow()
