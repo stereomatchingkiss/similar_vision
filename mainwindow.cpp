@@ -5,6 +5,7 @@
 #include "core/scan_folder.hpp"
 #include "model/duplicate_img_model.hpp"
 #include "model/folder_model.hpp"
+#include "ui/advance_setting_dialog.hpp"
 #include "ui/basic_setting_dialog.hpp"
 
 #include <QDebug>
@@ -19,7 +20,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
+    ui(new Ui::MainWindow),    
     basic_settings_(new basic_setting_dialog(this)),
     duplicate_img_model_(new duplicate_img_model(this)),
     folder_model_(new folder_model(this)),
@@ -445,4 +446,9 @@ void MainWindow::on_action_fatcow_triggered()
     QMessageBox::information(this, tr("Source"),
                              tr("The icons are come from http://www.fatcow."
                                 "com/free-icons"));
+}
+
+void MainWindow::on_action_advance_setting_triggered()
+{
+    advance_setting_dialog().exec();
 }

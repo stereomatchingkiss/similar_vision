@@ -12,11 +12,11 @@ class MainWindow;
 class QGraphicsView;
 class QElapsedTimer;
 
+class basic_setting_dialog;
 class duplicate_img_model;
 class folder_model;
 class pics_find_img_hash;
 class scan_folder;
-class basic_setting_dialog;
 
 class MainWindow : public QMainWindow
 {
@@ -51,13 +51,15 @@ private slots:
 
     void on_pb_rt_recycle_clicked();
 
+    void on_action_advance_setting_triggered();
+
     void on_action_basic_setting_triggered();
 
     void on_action_exit_triggered();
 
     void on_action_qt_triggered();
 
-    void on_action_fatcow_triggered();
+    void on_action_fatcow_triggered();    
 
 private:
     void delete_img(QString const &name);
