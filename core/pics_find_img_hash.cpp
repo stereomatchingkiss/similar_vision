@@ -34,22 +34,30 @@ public:
     std::vector<edges_type> &edges_;
 };
 
-struct norm_hamming_dist
+struct dist_compare
 {
     using value_type = std::pair<QString, cv::Mat>;
+    using algo_type = cv::Ptr<cv::img_hash::ImgHashBase>;
+
+    explicit dist_compare(algo_type algo) :
+        algo_(algo){}
 
     double operator()(value_type const &lhs,
                       value_type const &rhs) const
     {
-        return cv::norm(lhs.second, rhs.second, cv::NORM_HAMMING);
+        return algo_->compare(lhs.second, rhs.second);
     }
+
+private:
+    algo_type algo_;
 };
 
-template<typename Tree>
+template<typename Tree, typename Condition>
 graph_type create_graph(Tree const &tree,
-                        int sample_size, int actual_size)
+                        int sample_size, int actual_size,
+                        Condition condition)
 {
-    using value_type = norm_hamming_dist::value_type;
+    using value_type = dist_compare::value_type;
 
     std::map<QString, size_t> name_id;
     auto const &items = tree.get_items();
@@ -62,7 +70,7 @@ graph_type create_graph(Tree const &tree,
     graph_type graph;
     for(size_t i = 0; i != items.size(); ++i){
         tree.search(items[i], sample_size, result, distance,
-                    [](double val){ return val <= 5; });
+                    condition);
         for(auto const &pair : result){
             auto it = name_id.find(pair.first);
             if(it != std::end(name_id)){
@@ -112,13 +120,36 @@ QStringList pics_find_img_hash::get_original_img() const
 
 void pics_find_img_hash::compare_hash()
 {
-    using value_type = norm_hamming_dist::value_type;
+    using namespace cv::img_hash;
+    using value_type = dist_compare::value_type;
 
-    vp_tree<value_type, norm_hamming_dist> hamming_tree;
+    dist_compare dc(algo_);
+    vp_tree<value_type, dist_compare> hamming_tree(std::move(dc));
     hamming_tree.create(std::move(hash_arr_));
 
-    auto const graph = create_graph(hamming_tree,
-                                    abs_file_path_.size(), 10);
+    //vp tree do not works for L2-norm(non metric space)
+    //and the comparision criteria of RadialVarianHash yet
+    std::map<std::string, double> th_table
+    {
+        {AverageHash::create()->getDefaultName(), 5},
+        {PHash::create()->getDefaultName(), 5},
+        {BlockMeanHash::create(0)->getDefaultName(), 12},
+        {BlockMeanHash::create(1)->getDefaultName(), 48},
+        {MarrHildrethHash::create()->getDefaultName(), 30},
+        {ColorMomentHash::create()->getDefaultName(), 8}
+    };
+
+    graph_type graph;
+    if(algo_->getDefaultName() != RadialVarianceHash::create()->getDefaultName()){
+        double const threshold = th_table[algo_->getDefaultName()];
+        graph = create_graph(hamming_tree,
+                             abs_file_path_.size(), 10,
+                             [=](double val){ return val <= threshold; });
+    }else{
+        graph = create_graph(hamming_tree,
+                             abs_file_path_.size(), 10,
+                             [=](double val){ return val >= 0.9; });
+    }
     auto const edges = create_edges(graph);
     auto const &items = hamming_tree.get_items();
     original_img_.clear();
