@@ -3,7 +3,10 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication a(argc, argv);    
+    QCoreApplication::setOrganizationName("freedom");
+    QCoreApplication::setApplicationName("similar_vision");
+
     MainWindow w;
     w.show();
 

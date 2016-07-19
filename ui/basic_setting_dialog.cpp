@@ -22,7 +22,7 @@ basic_setting_dialog::basic_setting_dialog(QWidget *parent) :
     check_box_settings_.emplace_back("Search/perfect_match", ui->cb_perfect_match);
     check_box_settings_.emplace_back("App/auto_update", ui->cb_auto_update);
 
-    QSettings const settings(tr("freedom"), tr("similar_vision"));
+    QSettings const settings;
     for(auto &pair : check_box_settings_){
         if(settings.contains(pair.first)){
             pair.second->setChecked(settings.value(pair.first).toBool());
@@ -48,7 +48,7 @@ basic_setting_dialog::basic_setting_dialog(QWidget *parent) :
 
 basic_setting_dialog::~basic_setting_dialog()
 {
-    QSettings settings(tr("freedom"), tr("similar_vision"));
+    QSettings settings;
     for(auto &pair : check_box_settings_){
         settings.setValue(pair.first, pair.second->isChecked());
     }

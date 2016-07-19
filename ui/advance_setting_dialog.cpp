@@ -87,7 +87,7 @@ advance_setting_dialog::advance_setting_dialog(QWidget *parent) :
     hash_buttons_.emplace_back(ui->rb_phash);
     hash_buttons_.emplace_back(ui->rb_radial_hash);
 
-    QSettings settings(tr("freedom"), tr("similar_vision"));
+    QSettings settings;
     if(settings.contains(hash_name_[0])){
         for(size_t i = 0; i != hash_buttons_.size(); ++i){
             if(settings.value(hash_name_[static_cast<int>(i)]).toBool()){
@@ -112,7 +112,7 @@ advance_setting_dialog::advance_setting_dialog(QWidget *parent) :
 
 advance_setting_dialog::~advance_setting_dialog()
 {
-    QSettings settings(tr("freedom"), tr("similar_vision"));
+    QSettings settings;
     for(size_t i = 0; i != hash_buttons_.size(); ++i){
         settings.setValue(hash_name_[static_cast<int>(i)],
                 hash_buttons_[static_cast<int>(i)]->isChecked());
