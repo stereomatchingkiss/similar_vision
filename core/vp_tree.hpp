@@ -15,6 +15,12 @@ template<typename T, typename Distance>
 class vp_tree
 {
 public:
+    template<typename DistType>
+    explicit vp_tree(DistType &&distance) :
+        distance_(std::forward<DistType>(distance)),
+        root_(nullptr)
+    {}
+
     vp_tree() :
         root_(nullptr)
     {}
@@ -105,11 +111,13 @@ private:
 
     struct DistanceComparator
     {
+        Distance &distance_;
         const T& item;
-        Distance distance;
-        DistanceComparator( const T& item ) : item(item) {}
+        DistanceComparator(Distance &distance, const T& item ) :
+            distance_(distance),
+            item(item) {}
         bool operator()(const T& a, const T& b) {
-            return distance( item, a ) < distance( item, b );
+            return distance_( item, a ) < distance_( item, b );
         }
     };
 
@@ -143,7 +151,7 @@ private:
                         items_.begin() + lower + 1,
                         items_.begin() + median,
                         items_.begin() + upper,
-                        DistanceComparator( items_[lower] ));
+                        DistanceComparator(distance_, items_[lower]));
 
             // what was the median?
             node->threshold = distance_( items_[lower], items_[median] );
