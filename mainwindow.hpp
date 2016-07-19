@@ -12,7 +12,6 @@ class MainWindow;
 class QGraphicsView;
 class QElapsedTimer;
 
-class basic_setting_dialog;
 class duplicate_img_model;
 class folder_model;
 class pics_find_img_hash;
@@ -83,7 +82,6 @@ private:
 
     Ui::MainWindow *ui;
 
-    basic_setting_dialog *basic_settings_;
     duplicate_img_model *duplicate_img_model_;
     folder_model *folder_model_;
     pics_find_img_hash *pf_img_hash_;

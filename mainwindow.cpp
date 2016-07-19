@@ -21,8 +21,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),    
-    basic_settings_(new basic_setting_dialog(this)),
+    ui(new Ui::MainWindow),
     duplicate_img_model_(new duplicate_img_model(this)),
     folder_model_(new folder_model(this)),
     img_lf_changed_(false),
@@ -101,7 +100,7 @@ void MainWindow::scan_folders()
     ui->gp_view_rt->scene()->clear();
     timer_->restart();
     scf_thread_ = new scan_folder(folder_model_->stringList(),
-                                  basic_settings_->scan_img_type(),
+                                  basic_setting_dialog().scan_img_type(),
                                   ui->cb_scan_subdir->isChecked(), this);
     connect(scf_thread_, &scan_folder::progress, this, &MainWindow::set_label_info);
     connect(scf_thread_, &scan_folder::finished, this, &MainWindow::find_similar_pics);
@@ -444,8 +443,8 @@ void MainWindow::on_pb_rt_recycle_clicked()
 }
 
 void MainWindow::on_action_basic_setting_triggered()
-{
-    basic_settings_->exec();
+{    
+    basic_setting_dialog().exec();
 }
 
 void MainWindow::on_action_exit_triggered()
