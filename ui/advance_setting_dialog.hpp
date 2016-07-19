@@ -29,9 +29,7 @@ private:
     void create_connection();
     void plot_accuracy_chart(bool val = false);
     void plot_hash_chart();
-    void plot_hash_speed_chart();
-    void update_hash_origin_state();
-    void update_hash_speed_chart_orientation();
+    void update_hash_origin_state();    
 
     Ui::advance_setting_dialog *ui;
 
