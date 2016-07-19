@@ -96,6 +96,9 @@ advance_setting_dialog::advance_setting_dialog(QWidget *parent) :
             }
         }
     }
+    if(settings.contains("adv_settings_geometry")){
+        restoreGeometry(settings.value("adv_settings_geometry").toByteArray());
+    }
 
     update_hash_origin_state();
 
@@ -117,6 +120,7 @@ advance_setting_dialog::~advance_setting_dialog()
         settings.setValue(hash_name_[static_cast<int>(i)],
                 hash_buttons_[static_cast<int>(i)]->isChecked());
     }
+    settings.setValue("adv_settings_geometry", saveGeometry());
 
     delete ui;
 }

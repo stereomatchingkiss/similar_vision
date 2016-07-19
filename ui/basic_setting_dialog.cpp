@@ -28,6 +28,9 @@ basic_setting_dialog::basic_setting_dialog(QWidget *parent) :
             pair.second->setChecked(settings.value(pair.first).toBool());
         }
     }
+    if(settings.contains("basic_setting_geometry")){
+        restoreGeometry(settings.value("basic_setting_geometry").toByteArray());
+    }
 
     origin_state_.emplace_back(ui->cb_bmp->isChecked(), ui->cb_bmp);
     origin_state_.emplace_back(ui->cb_jpeg->isChecked(), ui->cb_jpeg);
@@ -53,6 +56,7 @@ basic_setting_dialog::~basic_setting_dialog()
         settings.setValue(pair.first, pair.second->isChecked());
     }
     settings.setValue("version", 1.0);
+    settings.setValue("basic_setting_geometry", saveGeometry());
 
     delete ui;
 }

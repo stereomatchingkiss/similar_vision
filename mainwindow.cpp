@@ -15,6 +15,7 @@
 #include <QMessageBox>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QElapsedTimer>
+#include <QSettings>
 
 #include <opencv2/highgui.hpp>
 
@@ -45,6 +46,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->gp_view_lf->setScene(new QGraphicsScene(this));
     ui->gp_view_rt->setScene(new QGraphicsScene(this));
 
+    QSettings settings;
+    if(settings.contains("main_geometry")){
+        restoreGeometry(settings.value("main_geometry").toByteArray());
+    }
+
     connect(folder_model_, &folder_model::drop_data,
             this, &MainWindow::enable_folder_edit_ui);
     connect(ui->list_view_folder, &paint_custom_words::view_selected,
@@ -55,6 +61,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    QSettings settings;
+    settings.setValue("main_geometry", saveGeometry());
+
     delete ui;
 }
 
