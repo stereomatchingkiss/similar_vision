@@ -26,13 +26,17 @@ public:
 
 private:
     void cancel_clicked();
+    void create_connection();
     void plot_accuracy_chart(bool val = false);
+    void plot_hash_chart();
+    void plot_hash_speed_chart();
     void update_hash_origin_state();
+    void update_hash_speed_chart_orientation();
 
     Ui::advance_setting_dialog *ui;
 
     std::vector<QRadioButton*> hash_buttons_;
-    std::vector<QString> hash_name_;
+    QStringList hash_name_;
     std::vector<bool> hash_origin_state_;
 };
 

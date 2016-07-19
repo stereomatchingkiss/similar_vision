@@ -6,84 +6,156 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1009</width>
-    <height>559</height>
+    <width>1234</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Advance setting</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Image hash algorithms</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QRadioButton" name="rb_avg_hash">
-          <property name="text">
-           <string>Average hash</string>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Hash algorithms</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QRadioButton" name="rb_avg_hash">
+            <property name="text">
+             <string>Average hash</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rb_bm_hash_0">
+            <property name="text">
+             <string>Block mean hash 0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rb_bm_hash_1">
+            <property name="text">
+             <string>Block mean hash 1</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rb_color_moment_hash">
+            <property name="text">
+             <string>Color moment hash</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rb_marr_hash">
+            <property name="text">
+             <string>Marr-Hildreth hash</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rb_phash">
+            <property name="text">
+             <string>PHash</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rb_radial_hash">
+            <property name="text">
+             <string>Radial variance hash</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Hash accuracy</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Orientation</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="combox_hash_orien"/>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="single_bar_plot" name="hash_accuracy_chart" native="true"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>Hash speed</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="checked">
-           <bool>true</bool>
+          <property name="text">
+           <string>Orientation</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QRadioButton" name="rb_phash">
+        <item row="0" column="1">
+         <widget class="QComboBox" name="combox_hash_spd_orien"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>PHash</string>
+           <string>Scale</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QRadioButton" name="rb_bm_hash_0">
-          <property name="text">
-           <string>Block mean hash 0</string>
-          </property>
-         </widget>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="combox_hash_spd_unit"/>
         </item>
-        <item>
-         <widget class="QRadioButton" name="rb_bm_hash_1">
-          <property name="text">
-           <string>Block mean hash 1</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="rb_marr_hash">
-          <property name="text">
-           <string>Marr-Hildreth hash</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="rb_radial_hash">
-          <property name="text">
-           <string>Radial variance hash</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="rb_color_moment_hash">
-          <property name="text">
-           <string>Color moment hash</string>
-          </property>
+        <item row="2" column="0" colspan="2">
+         <widget class="single_bar_plot" name="hash_speed_chart" native="true">
+          <zorder>groupBox</zorder>
          </widget>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QComboBox" name="combox_hash_orien"/>
-      </item>
-      <item>
-       <widget class="single_bar_plot" name="accuracy_chart" native="true"/>
-      </item>
-     </layout>
-    </widget>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
