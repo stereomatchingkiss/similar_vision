@@ -7,7 +7,8 @@ Same as [Awesome Duplicate Photo Finder](http://www.duplicate-finder.com/photo.h
 NO ADWARE, NO SPYWARE, NO REGISTRATION, NO POPUPS, NO MALWARE or other unwanted software.
 
 Although this app is inspired by [Awesome Duplicate Photo Finder](http://www.duplicate-finder.com/photo.html), it is not a 
-copy and paste of it. To make it 
+copy and paste of it. This app adds some new features on finding similar images and intend to support the functions of 
+finding similar videos in the future.
 
 # ScreenShot
 
@@ -41,8 +42,6 @@ blurring, noise(gaussian), embedded with watermark, different format, jpeg compr
 - It is fun
 
 # Installation
-
-This module only depend on opencv_core and opencv_imgproc, by now it is not merged into the opencv_contrib yet, to build it, you can try following solution(please tell me a better one if you know, thanks)
 
 1. Unzip the file you download from [SourceForge](https://sourceforge.net/projects/similar-vision/files/?source=navbar)
 2. Double click the program--similar_vision, this is all you need to do
