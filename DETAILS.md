@@ -10,7 +10,7 @@ The dependency of this project are
 1. [Qt5.6.x](https://www.qt.io/download-open-source/#section-2)
 2. [OpenCV3.x](http://opencv.org/)
 3. [img_hash module of opencv_contrib(haven't merged yet)](https://github.com/stereomatchingkiss/opencv_contrib/tree/img_hash/modules/img_hash)
-4. [qt_enhance](https://github.com/stereomatchingkiss/qt_enhance/tree/master/compressor)
+4. [qwt](http://qwt.sourceforge.net/)
 
 ##How to build them
 
@@ -23,19 +23,13 @@ Community already build it for us, just download the installer suit your os and 
 Same as Qt5, community build it for us, lucky part of this library is it is very easy to build,
 the community do a good job on mantaining their make file.
 
+#qwt
+
+Open the qwt.pro file by your QtCreator, build it and wait for everything to be done.
+
 #img_hash module
 
 This [page]((https://github.com/stereomatchingkiss/opencv_contrib/tree/img_hash/modules/img_hash)) show you the details.
-
-#qt_enhance
-
-Do not need to build them, just clone the folders and place them as the same 
-parent directory of similar_vision. The hierarchy looks like
-
---similar_vision
-  --codes
---qt_enhance
-  --codes
 
 ##Bugs report and features request
 
