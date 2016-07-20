@@ -108,7 +108,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QGroupBox" name="groupBox_3">
+        <widget class="QGroupBox" name="group_box_search_opt">
          <property name="title">
           <string>Search options</string>
          </property>

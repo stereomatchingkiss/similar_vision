@@ -11,6 +11,8 @@ basic_setting_dialog::basic_setting_dialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->group_box_search_opt->hide();
+
     check_box_settings_.emplace_back("img_type/bmp_checked", ui->cb_bmp);
     check_box_settings_.emplace_back("img_type/jpeg_checked", ui->cb_jpeg);
     check_box_settings_.emplace_back("img_type/pbm_checked", ui->cb_pbm);
