@@ -260,28 +260,30 @@ void MainWindow::on_pb_delete_folder_clicked()
 
 void MainWindow::duplicate_img_select(QModelIndex const &index)
 {
-    auto const img_name_lf =
-            duplicate_img_model_->data(duplicate_img_model_->index(index.row(), 0),
-                                       Qt::DisplayRole).toString();
-    auto const img_name_rt =
-            duplicate_img_model_->data(duplicate_img_model_->index(index.row(), 1),
-                                       Qt::DisplayRole).toString();
-    img_lf_changed_ = pre_img_name_lf_ != img_name_lf ? true : false;
-    img_rt_changed_ = pre_img_name_rt_ != img_name_rt ? true : false;
-    pre_img_name_lf_ = img_name_lf;
-    pre_img_name_rt_ = img_name_rt;
-    bool can_view = view_duplicate_img(pre_img_name_lf_,
-                                       img_lf_changed_,
-                                       ui->gp_view_lf);
-    if(!can_view){
-        QMessageBox::warning(this, tr("Error"), tr("Cannot open image %1").arg(img_name_lf));
-        return;
-    }
-    can_view = view_duplicate_img(pre_img_name_rt_,
-                                  img_rt_changed_,
-                                  ui->gp_view_rt);
-    if(!can_view){
-        QMessageBox::warning(this, tr("Error"), tr("Cannot open image %1").arg(img_name_rt));
+    if(index.isValid()){
+        auto const img_name_lf =
+                duplicate_img_model_->data(duplicate_img_model_->index(index.row(), 0),
+                                           Qt::DisplayRole).toString();
+        auto const img_name_rt =
+                duplicate_img_model_->data(duplicate_img_model_->index(index.row(), 1),
+                                           Qt::DisplayRole).toString();
+        img_lf_changed_ = pre_img_name_lf_ != img_name_lf ? true : false;
+        img_rt_changed_ = pre_img_name_rt_ != img_name_rt ? true : false;
+        pre_img_name_lf_ = img_name_lf;
+        pre_img_name_rt_ = img_name_rt;
+        bool can_view = view_duplicate_img(pre_img_name_lf_,
+                                           img_lf_changed_,
+                                           ui->gp_view_lf);
+        if(!can_view){
+            QMessageBox::warning(this, tr("Error"), tr("Cannot open image %1").arg(img_name_lf));
+            return;
+        }
+        can_view = view_duplicate_img(pre_img_name_rt_,
+                                      img_rt_changed_,
+                                      ui->gp_view_rt);
+        if(!can_view){
+            QMessageBox::warning(this, tr("Error"), tr("Cannot open image %1").arg(img_name_rt));
+        }
     }
 }
 
