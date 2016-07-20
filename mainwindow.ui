@@ -32,7 +32,13 @@
       </property>
       <widget class="QGroupBox" name="groupBox_3">
        <property name="title">
-        <string/>
+        <string>Select folder</string>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
@@ -183,7 +189,7 @@
       </widget>
       <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
-        <string/>
+        <string>View image</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
