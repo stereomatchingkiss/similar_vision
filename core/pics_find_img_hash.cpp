@@ -97,13 +97,15 @@ std::vector<edges_type> create_edges(Graph const &graph)
 pics_find_img_hash::
 pics_find_img_hash(cv::Ptr<cv::img_hash::ImgHashBase> algo,
                    QStringList const &abs_file_path,
+                   double threshold,
                    QObject *parent) :
     QThread(parent),
     abs_file_path_(abs_file_path),
     algo_(algo),
     finished_(false),
     pool_size_(QThread::idealThreadCount() > 2 ?
-                   QThread::idealThreadCount() - 2 : 1)
+                   QThread::idealThreadCount() - 2 : 1),
+    threshold_(threshold)
 {
     cv::ocl::setUseOpenCL(false);
 }
@@ -129,26 +131,15 @@ void pics_find_img_hash::compare_hash()
 
     //vp tree do not works for L2-norm(non metric space)
     //and the comparision criteria of RadialVarianHash yet
-    std::map<std::string, double> th_table
-    {
-        {AverageHash::create()->getDefaultName(), 5},
-        {PHash::create()->getDefaultName(), 5},
-        {BlockMeanHash::create(0)->getDefaultName(), 12},
-        {BlockMeanHash::create(1)->getDefaultName(), 48},
-        {MarrHildrethHash::create()->getDefaultName(), 30},
-        {ColorMomentHash::create()->getDefaultName(), 8}
-    };
-
     graph_type graph;
-    if(algo_->getDefaultName() != RadialVarianceHash::create()->getDefaultName()){
-        double const threshold = th_table[algo_->getDefaultName()];
+    if(algo_->getDefaultName() != RadialVarianceHash::create()->getDefaultName()){        
         graph = create_graph(hamming_tree,
                              abs_file_path_.size(), 10,
-                             [=](double val){ return val <= threshold; });
+                             [=](double val){ return val <= threshold_; });
     }else{
         graph = create_graph(hamming_tree,
                              abs_file_path_.size(), 10,
-                             [=](double val){ return val >= 0.9; });
+                             [=](double val){ return val >= threshold_; });
     }
     auto const edges = create_edges(graph);
     auto const &items = hamming_tree.get_items();

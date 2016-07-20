@@ -20,6 +20,7 @@ public:
     explicit pics_find_img_hash(
             cv::Ptr<cv::img_hash::ImgHashBase> algo,
             QStringList const &abs_file_path,
+            double threshold,
             QObject *parent = nullptr);
 
     QStringList get_duplicate_img() const;
@@ -50,6 +51,7 @@ private:
     std::mutex mutex_;
     QStringList original_img_;
     int const pool_size_;
+    double threshold_;
 };
 
 #endif // FIND_SIMILAR_PICS_HPP

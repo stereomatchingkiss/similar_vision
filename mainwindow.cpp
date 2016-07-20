@@ -132,6 +132,7 @@ void MainWindow::find_similar_pics()
 
     pf_img_hash_ = new pics_find_img_hash(advance_setting_dialog().get_hash_algo(),
                                           scf_thread_->get_abs_file_path(),
+                                          advance_setting_dialog().get_threshold(),
                                           this);
     scf_thread_->deleteLater();
 
