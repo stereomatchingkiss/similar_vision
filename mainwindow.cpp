@@ -130,7 +130,7 @@ void MainWindow::find_similar_pics()
 {
     using namespace cv::img_hash;
 
-    pf_img_hash_ = new pics_find_img_hash(AverageHash::create(),
+    pf_img_hash_ = new pics_find_img_hash(advance_setting_dialog().get_hash_algo(),
                                           scf_thread_->get_abs_file_path(),
                                           this);
     scf_thread_->deleteLater();
