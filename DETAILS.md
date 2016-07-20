@@ -9,8 +9,9 @@ The dependency of this project are
 
 1. [Qt5.6.x](https://www.qt.io/download-open-source/#section-2)
 2. [OpenCV3.x](http://opencv.org/)
-3. [img_hash module of opencv_contrib(haven't merged yet)](https://github.com/stereomatchingkiss/opencv_contrib/tree/img_hash/modules/img_hash)
-4. [qwt](http://qwt.sourceforge.net/)
+3. [qwt](http://qwt.sourceforge.net/)
+4. [boost1.61](http://www.boost.org/)
+5. [img_hash module of opencv_contrib(haven't merged yet)](https://github.com/stereomatchingkiss/opencv_contrib/tree/img_hash/modules/img_hash)
 
 ##How to build them
 
@@ -26,6 +27,10 @@ the community do a good job on mantaining their make file.
 #qwt
 
 Open the qwt.pro file by your QtCreator, build it and wait for everything to be done.
+
+#boost
+
+This app reply on header only libraries, they are boost::multi_index and boost::graph.
 
 #img_hash module
 
