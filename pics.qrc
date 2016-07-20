@@ -9,5 +9,6 @@
         <file>pics/folder_delete.png</file>
         <file>pics/folder_go.png</file>
         <file>pics/right.png</file>
+        <file>pics/find.ico</file>
     </qresource>
 </RCC>

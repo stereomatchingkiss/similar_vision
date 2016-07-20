@@ -5,7 +5,6 @@
 #-------------------------------------------------
 
 QT       += core gui concurrent
-#CONFIG += console
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,6 +13,10 @@ TEMPLATE = app
 
 INCLUDEPATH += ui
 #INCLUDEPATH += ../
+
+win32{
+RC_FILE = pics/similar_vision.rc
+}
 
 include(../pri/boost.pri)
 include(../pri/cv_dev.pri)
