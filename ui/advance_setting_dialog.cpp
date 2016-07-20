@@ -33,6 +33,10 @@ void advance_setting_dialog::create_connection()
 advance_setting_dialog::advance_setting_dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::advance_setting_dialog),
+    default_hash_threshold_{5, 12, 48, 30, 5},
+    default_thresh_name_{"avg_default_thresh", "bmh_0_default_thresh",
+                      "bmh_1_default_thresh", "marr_hash_default_thresh",
+                      "phash_default_thresh"},
     hash_name_{"Average hash", "Block mean hash 0", "Block mean hash 1",
                "Marr Hildreth hash", "Phash"},
     hash_origin_state_(hash_name_.size())
@@ -41,7 +45,7 @@ advance_setting_dialog::advance_setting_dialog(QWidget *parent) :
 
     hash_buttons_.emplace_back(ui->rb_avg_hash);
     hash_buttons_.emplace_back(ui->rb_bm_hash_0);
-    hash_buttons_.emplace_back(ui->rb_bm_hash_1);    
+    hash_buttons_.emplace_back(ui->rb_bm_hash_1);
     hash_buttons_.emplace_back(ui->rb_marr_hash);
     hash_buttons_.emplace_back(ui->rb_phash);
 
@@ -58,6 +62,11 @@ advance_setting_dialog::advance_setting_dialog(QWidget *parent) :
                 hash_buttons_[i]->setChecked(true);
                 break;
             }
+        }
+    }
+    if(settings.contains(default_thresh_name_[0])){
+        for(size_t i = 0; i != sliders_.size(); ++i){
+            sliders_[i]->setValue(settings.value(default_thresh_name_[i]).toInt());
         }
     }
     if(settings.contains("adv_settings_geometry")){
@@ -82,6 +91,10 @@ advance_setting_dialog::~advance_setting_dialog()
                 hash_buttons_[static_cast<int>(i)]->isChecked());
     }
     settings.setValue("adv_settings_geometry", saveGeometry());
+
+    for(size_t i = 0; i != sliders_.size(); ++i){
+        settings.setValue(default_thresh_name_[i], sliders_[i]->value());
+    }
 
     delete ui;
 }
@@ -126,6 +139,10 @@ void advance_setting_dialog::cancel_clicked()
             hash_buttons_[i]->setChecked(true);
             break;
         }
+    }
+
+    for(size_t i = 0; i != sliders_.size(); ++i){
+        sliders_[i]->setValue(default_hash_threshold_[i]);
     }
 }
 

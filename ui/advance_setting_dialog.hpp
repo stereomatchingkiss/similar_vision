@@ -47,8 +47,11 @@ private:
 
     Ui::advance_setting_dialog *ui;
 
+    std::vector<int> default_hash_threshold_;
+    std::vector<QString> default_thresh_name_;
     std::vector<QRadioButton*> hash_buttons_;
     std::vector<QSlider*> sliders_;
+
     QStringList hash_name_;
     std::vector<bool> hash_origin_state_;
 };
