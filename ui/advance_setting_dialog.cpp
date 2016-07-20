@@ -41,14 +41,15 @@ advance_setting_dialog::advance_setting_dialog(QWidget *parent) :
 
     hash_buttons_.emplace_back(ui->rb_avg_hash);
     hash_buttons_.emplace_back(ui->rb_bm_hash_0);
-    hash_buttons_.emplace_back(ui->rb_bm_hash_1);
-    //hash_buttons_.emplace_back(ui->rb_color_moment_hash);
+    hash_buttons_.emplace_back(ui->rb_bm_hash_1);    
     hash_buttons_.emplace_back(ui->rb_marr_hash);
     hash_buttons_.emplace_back(ui->rb_phash);
-    //hash_buttons_.emplace_back(ui->rb_radial_hash);
 
-    ui->rb_radial_hash->hide();
-    ui->rb_color_moment_hash->hide();
+    sliders_.emplace_back(ui->hs_avg_hash);
+    sliders_.emplace_back(ui->hs_bmh_0);
+    sliders_.emplace_back(ui->hs_bmh_1);
+    sliders_.emplace_back(ui->hs_marr_hash);
+    sliders_.emplace_back(ui->hs_phash);
 
     QSettings settings;
     if(settings.contains(hash_name_[0])){
@@ -107,6 +108,17 @@ cv::Ptr<cv::img_hash::ImgHashBase> advance_setting_dialog::get_hash_algo() const
     return AverageHash::create();
 }
 
+double advance_setting_dialog::get_threshold() const
+{
+    for(size_t i = 0; i != sliders_.size(); ++i){
+        if(hash_buttons_[i]->isChecked()){
+            return sliders_[i]->value();
+        }
+    }
+
+    return 0;
+}
+
 void advance_setting_dialog::cancel_clicked()
 {
     for(size_t i = 0; i != hash_buttons_.size(); ++i){
@@ -148,4 +160,29 @@ void advance_setting_dialog::update_hash_origin_state()
     for(size_t i = 0; i != hash_buttons_.size(); ++i){
         hash_origin_state_[i] = hash_buttons_[i]->isChecked();
     }
+}
+
+void advance_setting_dialog::on_pb_avg_hash_default_clicked()
+{
+    ui->hs_avg_hash->setValue(5);
+}
+
+void advance_setting_dialog::on_pb_bmh_0_default_clicked()
+{
+    ui->hs_bmh_0->setValue(12);
+}
+
+void advance_setting_dialog::on_pb_bmh_1_default_clicked()
+{
+    ui->hs_bmh_1->setValue(48);
+}
+
+void advance_setting_dialog::on_pb_marr_hildreth_default_clicked()
+{
+    ui->hs_marr_hash->setValue(30);
+}
+
+void advance_setting_dialog::on_pb_phash_default_clicked()
+{
+    ui->hs_phash->setValue(5);
 }

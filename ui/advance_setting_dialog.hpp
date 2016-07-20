@@ -13,6 +13,7 @@ class advance_setting_dialog;
 }
 
 class QRadioButton;
+class QSlider;
 
 class advance_setting_dialog : public QDialog
 {
@@ -24,6 +25,19 @@ public:
 
     cv::Ptr<cv::img_hash::ImgHashBase> get_hash_algo() const;
 
+    double get_threshold() const;
+
+private slots:
+    void on_pb_avg_hash_default_clicked();
+
+    void on_pb_bmh_0_default_clicked();
+
+    void on_pb_bmh_1_default_clicked();
+
+    void on_pb_marr_hildreth_default_clicked();
+
+    void on_pb_phash_default_clicked();
+
 private:
     void cancel_clicked();
     void create_connection();
@@ -34,6 +48,7 @@ private:
     Ui::advance_setting_dialog *ui;
 
     std::vector<QRadioButton*> hash_buttons_;
+    std::vector<QSlider*> sliders_;
     QStringList hash_name_;
     std::vector<bool> hash_origin_state_;
 };

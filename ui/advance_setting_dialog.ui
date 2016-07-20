@@ -25,55 +25,239 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QRadioButton" name="rb_avg_hash">
-            <property name="text">
-             <string>Average hash</string>
+           <widget class="QGroupBox" name="groupBox_2">
+            <property name="title">
+             <string/>
             </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="rb_avg_hash">
+               <property name="text">
+                <string>Average hash</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QSlider" name="hs_avg_hash">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>5</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="spinBox">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="pb_avg_hash_default">
+               <property name="text">
+                <string>Default value</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="rb_bm_hash_0">
-            <property name="text">
-             <string>Block mean hash 0</string>
+           <widget class="QGroupBox" name="groupBox_4">
+            <property name="title">
+             <string/>
             </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0" colspan="2">
+              <widget class="QRadioButton" name="rb_bm_hash_0">
+               <property name="text">
+                <string>Block mean hash 0</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QSlider" name="hs_bmh_0">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>12</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="spinBox_2">
+               <property name="minimum">
+                <number>0</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>12</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="pb_bmh_0_default">
+               <property name="text">
+                <string>Default value</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="rb_bm_hash_1">
-            <property name="text">
-             <string>Block mean hash 1</string>
+           <widget class="QGroupBox" name="groupBox_5">
+            <property name="title">
+             <string/>
             </property>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="rb_bm_hash_1">
+               <property name="text">
+                <string>Block mean hash 1</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QSlider" name="hs_bmh_1">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>48</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="spinBox_3">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>48</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="pb_bmh_1_default">
+               <property name="text">
+                <string>Default value</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="rb_color_moment_hash">
-            <property name="text">
-             <string>Color moment hash</string>
+           <widget class="QGroupBox" name="groupBox_6">
+            <property name="title">
+             <string/>
             </property>
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="rb_marr_hash">
+               <property name="text">
+                <string>Marr-Hildreth hash</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QSlider" name="hs_marr_hash">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>30</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="spinBox_4">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>30</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="pb_marr_hildreth_default">
+               <property name="text">
+                <string>Default value</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="rb_marr_hash">
-            <property name="text">
-             <string>Marr-Hildreth hash</string>
+           <widget class="QGroupBox" name="groupBox_7">
+            <property name="title">
+             <string/>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="rb_phash">
-            <property name="text">
-             <string>PHash</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="rb_radial_hash">
-            <property name="text">
-             <string>Radial variance hash</string>
-            </property>
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="0" column="0">
+              <widget class="QRadioButton" name="rb_phash">
+               <property name="text">
+                <string>PHash</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QSlider" name="hs_phash">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>5</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="spinBox_5">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="pb_phash_default">
+               <property name="text">
+                <string>Default value</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -140,8 +324,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>580</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -156,12 +340,172 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>580</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hs_avg_hash</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>120</x>
+     <y>154</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>hs_avg_hash</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>120</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hs_bmh_0</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_2</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>412</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>458</x>
+     <y>147</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>hs_bmh_0</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>455</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>433</x>
+     <y>156</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hs_bmh_1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_3</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>667</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>692</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>hs_bmh_1</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>692</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>152</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hs_marr_hash</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_4</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>915</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>931</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>hs_marr_hash</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>931</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>912</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hs_phash</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_5</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1146</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1170</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_5</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>hs_phash</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1179</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1130</x>
+     <y>156</y>
     </hint>
    </hints>
   </connection>
