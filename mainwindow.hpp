@@ -60,6 +60,8 @@ private slots:
 
     void on_action_fatcow_triggered();    
 
+    void on_action_visit_program_website_triggered();
+
 private:
     void delete_img(QString const &name);
     void duplicate_img_select(QModelIndex const &index);

@@ -9,6 +9,7 @@
 #include "ui/basic_setting_dialog.hpp"
 
 #include <QDebug>
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -470,4 +471,10 @@ void MainWindow::on_action_fatcow_triggered()
 void MainWindow::on_action_advance_setting_triggered()
 {
     advance_setting_dialog().exec();
+}
+
+void MainWindow::on_action_visit_program_website_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/"
+                                   "stereomatchingkiss/similar_vision"));
 }
