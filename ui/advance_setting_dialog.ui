@@ -42,6 +42,12 @@
              </item>
              <item row="1" column="0">
               <widget class="QSlider" name="hs_avg_hash">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -55,6 +61,12 @@
              </item>
              <item row="1" column="1">
               <widget class="QSpinBox" name="spinBox">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -88,6 +100,12 @@
              </item>
              <item row="1" column="0">
               <widget class="QSlider" name="hs_bmh_0">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -101,6 +119,12 @@
              </item>
              <item row="1" column="1">
               <widget class="QSpinBox" name="spinBox_2">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="minimum">
                 <number>0</number>
                </property>
@@ -137,6 +161,12 @@
              </item>
              <item row="1" column="0">
               <widget class="QSlider" name="hs_bmh_1">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -150,6 +180,12 @@
              </item>
              <item row="1" column="1">
               <widget class="QSpinBox" name="spinBox_3">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -183,6 +219,12 @@
              </item>
              <item row="1" column="0">
               <widget class="QSlider" name="hs_marr_hash">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -196,6 +238,12 @@
              </item>
              <item row="1" column="1">
               <widget class="QSpinBox" name="spinBox_4">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -229,6 +277,12 @@
              </item>
              <item row="1" column="0">
               <widget class="QSlider" name="hs_phash">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
@@ -242,6 +296,12 @@
              </item>
              <item row="1" column="1">
               <widget class="QSpinBox" name="spinBox_5">
+               <property name="toolTip">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
+               <property name="whatsThis">
+                <string>The lower the threshold,the more similar the images pair</string>
+               </property>
                <property name="maximum">
                 <number>100</number>
                </property>
