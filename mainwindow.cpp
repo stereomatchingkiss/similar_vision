@@ -16,6 +16,7 @@
 #include <QMessageBox>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QElapsedTimer>
+#include <QProcess>
 #include <QSettings>
 
 #include <opencv2/highgui.hpp>
@@ -477,4 +478,23 @@ void MainWindow::on_action_visit_program_website_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://github.com/"
                                    "stereomatchingkiss/similar_vision"));
+}
+
+void MainWindow::on_action_check_for_update_triggered()
+{
+    qDebug()<<"start update";
+    QString const app_dir_path = QCoreApplication::applicationDirPath();
+    qDebug()<<app_dir_path + "/auto_updater/auto_updater";
+
+    bool const can_open = QProcess::startDetached(app_dir_path + "/auto_updater/auto_updater",
+                                                  QStringList()<<"-a"<<(app_dir_path + "/similar_vision"),
+                                                  app_dir_path + "/auto_updater");
+    if(can_open){
+        close();
+    }else{
+        QMessageBox::warning(this, tr("Update fail"),
+                             tr("Cannot open auto_updater, please try again or "
+                                "open the app(%1) by yourself after you "
+                                "close this app").arg(app_dir_path));
+    }
 }
