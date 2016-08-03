@@ -38,6 +38,9 @@
                <property name="checked">
                 <bool>true</bool>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="1" column="0">
@@ -96,6 +99,9 @@
                <property name="text">
                 <string>Block mean hash 0</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="1" column="0">
@@ -157,6 +163,9 @@
                <property name="text">
                 <string>Block mean hash 1</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="1" column="0">
@@ -215,6 +224,9 @@
                <property name="text">
                 <string>Marr-Hildreth hash</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="1" column="0">
@@ -273,6 +285,9 @@
                <property name="text">
                 <string>PHash</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="1" column="0">
@@ -570,4 +585,7 @@
    </hints>
   </connection>
  </connections>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>
