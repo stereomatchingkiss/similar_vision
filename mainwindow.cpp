@@ -525,7 +525,7 @@ bool MainWindow::can_update() const
                   QStringList()<<"-n",
                   QIODevice::ReadOnly);
     if(process.waitForFinished(-1)){
-        QString process_output(process.readAll());
+        QString const process_output(process.readAll());
 
         qDebug()<<"process output : "<<process_output;
         if(process_output.contains("need to update")){
