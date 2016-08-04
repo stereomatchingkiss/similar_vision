@@ -66,6 +66,14 @@ MainWindow::MainWindow(QWidget *parent) :
             duplicate_img_select(index);
         }
     });
+
+    if(basic_setting_dialog().auto_update()){
+        if(can_update()){
+            QMessageBox::information(this, tr("Update info"),
+                                     tr("similar_vision got a new version, please upate it "
+                                        "from Help->Check for update"));
+        }
+    }
 }
 
 MainWindow::~MainWindow()
