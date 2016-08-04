@@ -483,18 +483,55 @@ void MainWindow::on_action_visit_program_website_triggered()
 void MainWindow::on_action_check_for_update_triggered()
 {
     qDebug()<<"start update";
-    QString const app_dir_path = QCoreApplication::applicationDirPath();
-    qDebug()<<app_dir_path + "/auto_updater/auto_updater";
 
-    bool const can_open = QProcess::startDetached(app_dir_path + "/auto_updater/auto_updater",
-                                                  QStringList()<<"-a"<<(app_dir_path + "/similar_vision"),
-                                                  app_dir_path + "/auto_updater");
-    if(can_open){
-        close();
+    setEnabled(false);
+    if(can_update()){
+        QString const app_dir_path = QCoreApplication::applicationDirPath();
+        qDebug()<<app_dir_path + "/auto_updater/auto_updater";
+
+        bool const can_open = QProcess::startDetached(app_dir_path + "/auto_updater/auto_updater",
+                                                      QStringList()<<"-a"<<(app_dir_path + "/similar_vision"),
+                                                      app_dir_path + "/auto_updater");
+        if(can_open){
+            close();
+        }else{
+            QMessageBox::warning(this, tr("Update fail"),
+                                 tr("Cannot open auto_updater, please try again or "
+                                    "execute the app(%1) by yourself after you "
+                                    "close this app").arg(app_dir_path));
+        }
     }else{
-        QMessageBox::warning(this, tr("Update fail"),
-                             tr("Cannot open auto_updater, please try again or "
-                                "open the app(%1) by yourself after you "
-                                "close this app").arg(app_dir_path));
+        QMessageBox::information(this, tr("Update info"),
+                                 tr("Nothing to update"));
     }
+    setEnabled(true);
+}
+
+bool MainWindow::can_update() const
+{
+    QString const app_dir_path = QCoreApplication::applicationDirPath();
+    QProcess process;
+    struct kill_process
+    {
+        kill_process(QProcess *p) : process_(p) {}
+        ~kill_process() { process_->kill(); }
+
+    private:
+        QProcess *process_;
+    };
+    kill_process kp(&process);
+
+    process.start(app_dir_path + "/auto_updater/auto_updater",
+                  QStringList()<<"-n",
+                  QIODevice::ReadOnly);
+    if(process.waitForFinished(-1)){
+        QString process_output(process.readAll());
+
+        qDebug()<<"process output : "<<process_output;
+        if(process_output.contains("need to update")){
+            return true;
+        }
+    }
+
+    return false;
 }

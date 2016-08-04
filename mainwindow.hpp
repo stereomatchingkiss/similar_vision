@@ -65,6 +65,7 @@ private slots:
     void on_action_check_for_update_triggered();
 
 private:
+    bool can_update() const;
     void delete_img(QString const &name);
     void duplicate_img_select(QModelIndex const &index);
     void enable_folder_edit_ui();
