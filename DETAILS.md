@@ -1,6 +1,6 @@
 # Synopsis
 
-similar_vision is a free tool aim to offer a gui tools to visualize the 
+similar_vision is a free gui tools which could visualize the 
 performance of difference algorithms on finding similar images and videos.
 
 # Dependencies
@@ -12,6 +12,7 @@ The dependency of this project are
 3. [qwt](http://qwt.sourceforge.net/)
 4. [boost1.61](http://www.boost.org/)
 5. [img_hash module of opencv_contrib(haven't merged yet)](https://github.com/stereomatchingkiss/opencv_contrib/tree/img_hash/modules/img_hash)
+6. [auto_update](https://github.com/stereomatchingkiss/auto_updater)
 
 #How to build them
 
@@ -35,6 +36,10 @@ This app reply on header only libraries, they are boost::multi_index and boost::
 ##img_hash module
 
 This [page]((https://github.com/stereomatchingkiss/opencv_contrib/tree/img_hash/modules/img_hash)) show you the details.
+
+##auto_updater
+
+similar_vision use this small CLI tool to do the auto update chores, this tool do not affect build process of simialr_vision.
 
 # Bugs report and features request
 
