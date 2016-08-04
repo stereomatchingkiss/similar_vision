@@ -54,3 +54,7 @@ implement, please send it to my email--thamngapwei@gmail.com.
 # For programmers
 
 Please go to [details](https://github.com/stereomatchingkiss/similar_vision/blob/master/DETAILS.md)
+
+#License
+
+similar_vision is free and open-source software, it is released under the [DBAD](https://github.com/stereomatchingkiss/similar_vision/blob/master/DBAD%20License) license.
