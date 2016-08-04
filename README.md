@@ -13,7 +13,7 @@ finding similar videos in the future.
 # ScreenShot
 
 ![Found image](https://a.fsdn.com/con/app/proj/similar-vision/screenshots/similar_00.JPG)
-![Accuracy chart](https://a.fsdn.com/con/app/proj/similar-vision/screenshots/similar_01.JPG)
+![Accuracy chart](https://a.fsdn.com/con/app/proj/similar-vision/screenshots/similar_03.JPG)
 
 # Features
 - Simple interface
