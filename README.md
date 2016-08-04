@@ -57,4 +57,4 @@ Please go to [details](https://github.com/stereomatchingkiss/similar_vision/blob
 
 #License
 
-similar_vision is free and open-source software, it is released under the [DBAD](https://github.com/stereomatchingkiss/similar_vision/blob/master/DBAD%20License) license.
+similar_vision is free and open-source software, it is released under the [DBAD](https://github.com/stereomatchingkiss/similar_vision/blob/master/DBAD_License.md) license.
