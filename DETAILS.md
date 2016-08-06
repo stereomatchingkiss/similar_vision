@@ -3,6 +3,12 @@
 similar_vision is a free gui tools which could visualize the 
 performance of difference algorithms on finding similar images and videos.
 
+# Motivation
+
+- Show the power of [img_hash module](https://github.com/stereomatchingkiss/opencv_contrib/tree/img_hash/modules/img_hash)
+- Create a platform to demonstrate the performance of different algorithms
+- It is fun
+
 # Dependencies
 
 The dependency of this project are
