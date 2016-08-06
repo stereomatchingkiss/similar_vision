@@ -33,7 +33,7 @@ blurring, noise(gaussian), embedded with watermark, different format, jpeg compr
 - Self explain chart of the pros and cons of different algorithms
 - You can update this app with one click
 - This is an open source software, you can tweak it as you like
-- Cross platform, support windows XP~windows10 and Linux
+- Run on windows XP~windows10, will support Ubuntu 64 in the future
 
 # Installation
 
