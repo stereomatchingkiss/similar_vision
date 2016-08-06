@@ -35,12 +35,6 @@ blurring, noise(gaussian), embedded with watermark, different format, jpeg compr
 - This is an open source software, you can tweak it as you like
 - Cross platform, support windows XP~windows10 and Linux
 
-# Motivation
-
-- Show the power of [img_hash module](https://github.com/stereomatchingkiss/opencv_contrib/tree/img_hash/modules/img_hash)
-- Create a platform to demonstrate the performance of different algorithms
-- It is fun
-
 # Installation
 
 1. Unzip the file you download from [SourceForge](https://sourceforge.net/projects/similar-vision/files/?source=navbar)
