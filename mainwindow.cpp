@@ -412,7 +412,7 @@ void MainWindow::remove_img_from_table(QString const &name)
     duplicate_img_model_->remove_img(name);
     int const row_count = duplicate_img_model_->rowCount();
     if(row_count > 1){
-        auto index = duplicate_img_model_->index(cur_index + 1, 0);
+        auto index = duplicate_img_model_->index(cur_index, 0);
         if(index.isValid()){
             ui->table_view_similar_pics->setCurrentIndex(index);
             duplicate_img_select(index);
