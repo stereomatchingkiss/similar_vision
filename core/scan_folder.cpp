@@ -26,8 +26,22 @@ QStringList scan_folder::get_abs_file_path() const
     return  files_;
 }
 
+/**
+ * @brief Exclude child folders if any
+ * @param folders self explained
+ * @return folders without any child folders
+ * @code
+ * "c:/users/wahaha/pics/konosuba"
+ * "c:/users/wahaha/pics/konosuba/first_episode"
+ * "c:/users/wahaha/pics/konosuba/sec_episode"
+ *
+ * There are two child folders of konosuba, they
+ * are first episode and second episode, this function
+ * will remove these child folders.
+ */
 QStringList scan_folder::exclude_child_folders(const QStringList &folders) const
 {
+    //TODO : find a better, more efficient, easier to understand solution
     QStringList result = folders;
     result.sort();
     for(int i = 0; i < result.size() - 1; ++i){
