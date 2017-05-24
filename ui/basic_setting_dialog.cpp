@@ -97,8 +97,7 @@ void basic_setting_dialog::cancel_clicked()
 {
     for(auto &pair : origin_state_){
         pair.second->setChecked(pair.first);
-    }
-    close();
+    }    
 }
 
 void basic_setting_dialog::ok_clicked()
