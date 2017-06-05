@@ -43,23 +43,11 @@ basic_setting_dialog::basic_setting_dialog(QWidget *parent) :
     origin_state_.emplace_back(ui->cb_tiff->isChecked(), ui->cb_tiff);
     origin_state_.emplace_back(ui->cb_webp->isChecked(), ui->cb_webp);
     origin_state_.emplace_back(ui->cb_perfect_match->isChecked(), ui->cb_perfect_match);
-    origin_state_.emplace_back(ui->cb_auto_update->isChecked(), ui->cb_auto_update);
-
-    connect(ui->buttonBox, &QDialogButtonBox::accepted,
-            this, &basic_setting_dialog::ok_clicked);
-    connect(ui->buttonBox, &QDialogButtonBox::rejected,
-            this, &basic_setting_dialog::cancel_clicked);
+    origin_state_.emplace_back(ui->cb_auto_update->isChecked(), ui->cb_auto_update);    
 }
 
 basic_setting_dialog::~basic_setting_dialog()
-{
-    QSettings settings;
-    for(auto &pair : check_box_settings_){
-        settings.setValue(pair.first, pair.second->isChecked());
-    }
-    settings.setValue("version", 1.0);
-    settings.setValue("basic_setting_geometry", saveGeometry());
-
+{    
     delete ui;
 }
 
@@ -93,17 +81,31 @@ QStringList basic_setting_dialog::scan_img_type() const
     return types;
 }
 
-void basic_setting_dialog::cancel_clicked()
+void basic_setting_dialog::closeEvent(QCloseEvent *event)
 {
-    for(auto &pair : origin_state_){
-        pair.second->setChecked(pair.first);
-    }    
+    if(event){
+        QSettings settings;
+        for(auto &pair : check_box_settings_){
+            settings.setValue(pair.first, pair.second->isChecked());
+        }
+        settings.setValue("version", 1.0);
+        settings.setValue("basic_setting_geometry", saveGeometry());
+        QDialog::closeEvent(event);
+    }
 }
 
-void basic_setting_dialog::ok_clicked()
+void basic_setting_dialog::on_buttonBox_accepted()
 {
-    qDebug()<<"ok clicked";
     for(auto &pair : origin_state_){
         pair.first = pair.second->isChecked();
     }
+    close();
+}
+
+void basic_setting_dialog::on_buttonBox_rejected()
+{
+    for(auto &pair : origin_state_){
+        pair.second->setChecked(pair.first);
+    }
+    close();
 }

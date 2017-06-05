@@ -25,9 +25,13 @@ public:
     bool perfect_match() const;
     QStringList scan_img_type() const;
 
+private slots:
+    void on_buttonBox_accepted();
+
+    void on_buttonBox_rejected();
+
 private:
-    void cancel_clicked();
-    void ok_clicked();
+    void closeEvent(QCloseEvent *event) override;
 
     Ui::basic_setting_dialog *ui;
 
