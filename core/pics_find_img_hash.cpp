@@ -172,7 +172,7 @@ void pics_find_img_hash::compute_hash_mt()
     hash_arr_.clear();
     hash_arr_.reserve(abs_file_path_.size());
     std::mutex mutex;
-    std::atomic<size_t> size = 0;
+    std::atomic<size_t> size(0);
     auto compute_hash = [&](QString const &name)
     {
         auto const img = cv::imread(name.toStdString());
