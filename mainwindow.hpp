@@ -88,10 +88,10 @@ private:
     Ui::MainWindow *ui;
 
     duplicate_img_model *duplicate_img_model_;
-    folder_model *folder_model_;
-    pics_find_img_hash *pf_img_hash_;
+    folder_model *folder_model_;    
     bool img_lf_changed_;
     bool img_rt_changed_;
+    pics_find_img_hash *pf_img_hash_;
     QString pre_img_name_lf_;
     QString pre_img_name_rt_;
     scan_folder *scf_thread_;    
