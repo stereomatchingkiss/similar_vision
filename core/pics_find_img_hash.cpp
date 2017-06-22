@@ -129,18 +129,10 @@ void pics_find_img_hash::compare_hash()
     vp_tree<value_type, dist_compare> hamming_tree(std::move(dc));
     hamming_tree.create(std::move(hash_arr_));
 
-    //vp tree do not works for L2-norm(non metric space)
-    //and the comparision criteria of RadialVarianHash yet
     graph_type graph;
-    if(algo_->getDefaultName() != RadialVarianceHash::create()->getDefaultName()){        
-        graph = create_graph(hamming_tree,
-                             abs_file_path_.size(), 10,
-                             [=](double val){ return val <= threshold_; });
-    }else{
-        graph = create_graph(hamming_tree,
-                             abs_file_path_.size(), 10,
-                             [=](double val){ return val >= threshold_; });
-    }
+    graph = create_graph(hamming_tree,
+                         abs_file_path_.size(), 10,
+                         [=](double val){ return val <= threshold_; });
     auto const edges = create_edges(graph);
     auto const &items = hamming_tree.get_items();
     original_img_.clear();
