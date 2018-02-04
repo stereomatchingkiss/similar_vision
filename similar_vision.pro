@@ -18,11 +18,20 @@ INCLUDEPATH += ui
 
 win32{
 RC_FILE = pics/similar_vision.rc
-}
 
 include(../pri/boost.pri)
 include(../pri/cv_dev.pri)
+
+}
+
 include(../pri/qwt.pri)
+
+linux-g++{
+
+LIBS += -L/usr/local/lib -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs -lopencv_video -lopencv_videoio
+LIBS += -L/usr/local/lib -lopencv_img_hash
+
+}
 
 SOURCES += main.cpp\
         mainwindow.cpp \
