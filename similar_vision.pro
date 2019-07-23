@@ -21,15 +21,32 @@ RC_FILE = pics/similar_vision.rc
 
 include(../pri/boost.pri)
 include(../pri/cv_dev.pri)
+include(../pri/qwt.pri)
 
 }
 
-include(../pri/qwt.pri)
-
-linux-g++{
+unix:!macx {
 
 LIBS += -L/usr/local/lib -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs -lopencv_video -lopencv_videoio
 LIBS += -L/usr/local/lib -lopencv_img_hash
+
+}
+
+macx: {
+
+INCLUDEPATH += ../3rdLibs/opencv/opencv/build_macos/install/include/opencv4
+LIBS += -L"../3rdLibs/opencv/opencv/build_macos/install/lib" \
+        -l"opencv_world" -l"opencv_img_hash"
+
+INCLUDEPATH += ../3rdLibs/boost/boost_1_70_0/
+
+QWT_ROOT = ../3rdLibs/qwt/qwt-6.1.4
+
+INCLUDEPATH += $${QWT_ROOT}/src
+LIBS += $${QWT_ROOT}/lib/libqwt.a
+#include( $${QWT_ROOT}/qwtconfig.pri )
+#include( $${QWT_ROOT}/qwtbuild.pri )
+#include( $${QWT_ROOT}/qwtfunctions.pri )
 
 }
 
