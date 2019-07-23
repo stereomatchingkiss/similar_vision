@@ -83,6 +83,26 @@
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="cb_psb">
+          <property name="text">
+           <string>PSB</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="cb_psd">
+          <property name="text">
+           <string>PSD</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QCheckBox" name="cb_tiff">
           <property name="text">
            <string>TIFF</string>

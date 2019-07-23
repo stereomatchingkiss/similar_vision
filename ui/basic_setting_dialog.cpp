@@ -70,7 +70,8 @@ QStringList basic_setting_dialog::scan_img_type() const
         {"jpg", ui->cb_jpeg},{"pbm", ui->cb_pbm},
         {"pgm", ui->cb_pgm}, {"png", ui->cb_png},
         {"ppm", ui->cb_ppm}, {"tiff", ui->cb_tiff},
-        {"webp", ui->cb_webp}
+        {"webp", ui->cb_webp}, {"psb", ui->cb_psb},
+        {"psd", ui->cb_psd}
     };
     for(auto const &pair : mapper){
         if(pair.second->isChecked()){
