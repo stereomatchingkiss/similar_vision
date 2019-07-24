@@ -34,8 +34,12 @@ LIBS += -L/usr/local/lib -lopencv_img_hash
 
 macx: {
 
-INCLUDEPATH += ../3rdLibs/opencv/opencv/build_macos/install/include/opencv4
-LIBS += -L"../3rdLibs/opencv/opencv/build_macos/install/lib" \
+#INCLUDEPATH += ../3rdLibs/opencv/opencv/build_macos/install/include/opencv4
+#LIBS += -L"../3rdLibs/opencv/opencv/build_macos/install/lib" \
+#        -l"opencv_world" -l"opencv_img_hash"
+
+INCLUDEPATH += ../3rdLibs/opencv/opencv/build_macos_static/install/include/opencv4
+LIBS += -L"../3rdLibs/opencv/opencv/build_macos_static/install/lib" \
         -l"opencv_world" -l"opencv_img_hash"
 
 INCLUDEPATH += ../3rdLibs/boost/boost_1_70_0/
@@ -44,9 +48,6 @@ QWT_ROOT = ../3rdLibs/qwt/qwt-6.1.4
 
 INCLUDEPATH += $${QWT_ROOT}/src
 LIBS += $${QWT_ROOT}/lib/libqwt.a
-#include( $${QWT_ROOT}/qwtconfig.pri )
-#include( $${QWT_ROOT}/qwtbuild.pri )
-#include( $${QWT_ROOT}/qwtfunctions.pri )
 
 }
 
