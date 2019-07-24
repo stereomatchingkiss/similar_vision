@@ -5,8 +5,13 @@
 #include <QtConcurrent/QtConcurrentMap>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QDebug>
+#include <QFileInfo>
+#include <QImage>
+#include <QProcess>
 
 #include <opencv2/core/ocl.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 
 #include <boost/graph/adjacency_list.hpp>
@@ -92,6 +97,16 @@ std::vector<edges_type> create_edges(Graph const &graph)
     return edges;
 }
 
+cv::Mat qimage_to_cvmat(QImage &img)
+{
+    qDebug()<<__func__<<"use plugin to read image";
+    img = img.convertToFormat(QImage::Format_RGB888);
+    auto mat = cv::Mat(img.height(), img.width(), CV_8UC3,
+                       img.bits(), static_cast<size_t>(img.bytesPerLine()));
+    cv::cvtColor(mat, mat, cv::COLOR_RGB2BGR);
+    return mat.clone();
+}
+
 }//nameless namespace
 
 pics_find_img_hash::
@@ -146,9 +161,9 @@ void pics_find_img_hash::compare_hash()
 void pics_find_img_hash::compute_hash()
 {
     hash_arr_.clear();
-    hash_arr_.reserve(abs_file_path_.size());
+    hash_arr_.reserve(static_cast<size_t>(abs_file_path_.size()));
     for(auto const &name : abs_file_path_){
-        auto const img = cv::imread(name.toStdString());
+        auto const img = read_img(name);
         if(!img.empty()){
             cv::Mat hash;
             algo_->compute(img, hash);
@@ -162,16 +177,15 @@ void pics_find_img_hash::compute_hash()
 void pics_find_img_hash::compute_hash_mt()
 {    
     hash_arr_.clear();
-    hash_arr_.reserve(abs_file_path_.size());
+    hash_arr_.reserve(static_cast<size_t>(abs_file_path_.size()));
     std::mutex mutex;
     std::atomic<size_t> size(0);
     auto compute_hash = [&](QString const &name)
     {
-        auto const img = cv::imread(name.toStdString());
+        auto const img = read_img(name);
         if(!img.empty()){
             ++size;
             cv::Mat hash;
-            //cv::img_hash::averageHash(img, hash);
             std::lock_guard<std::mutex> guard(mutex);
             algo_->compute(img, hash);
             hash_arr_.emplace_back(name, hash);
@@ -185,19 +199,16 @@ void pics_find_img_hash::compute_hash_mt()
 void pics_find_img_hash::compute_hash_mt2()
 {
     hash_arr_.clear();
-    hash_arr_.reserve(abs_file_path_.size());
+    hash_arr_.reserve(static_cast<size_t>(abs_file_path_.size()));
     int process_size = 0;
     auto process_func = [&](cv::Mat const &img, int i)
     {
         cv::Mat hash;
-        bool const img_empty = img.empty();
         int size = 0;
         {
             std::lock_guard<std::mutex> lk(mutex_);
-            if(!img_empty){
-                algo_->compute(img, hash);
-                hash_arr_.emplace_back(abs_file_path_[i], hash);
-            }
+            algo_->compute(img, hash);
+            hash_arr_.emplace_back(abs_file_path_[i], hash);
             size = process_size + 1;
             ++process_size;
         }
@@ -208,16 +219,55 @@ void pics_find_img_hash::compute_hash_mt2()
             finished_ = true;
             cv_.notify_one();
         }
-
     };
 
     for(int i = 0; i != abs_file_path_.size(); ++i){
-        auto const img = cv::imread(abs_file_path_[i].toStdString());
-        QtConcurrent::run(QThreadPool::globalInstance(), process_func, img, i);
+        auto const img = read_img(abs_file_path_[i]);
+        if(!img.empty()){
+            QtConcurrent::run(QThreadPool::globalInstance(), process_func, img, i);
+        }
     }
 
     std::unique_lock<std::mutex> lk(mutex_);
     cv_.wait(lk, [this](){return finished_;});
+}
+
+cv::Mat pics_find_img_hash::read_img(const QString &img_path)
+{
+    auto const suffix = QFileInfo(img_path).suffix();
+    if(suffix.toLower() == "psb" || suffix.toLower() == "psd"){
+        QProcess process;        
+        QString const command = QString("/usr/local/bin/exiftool -Photoshop:PhotoshopThumbnail -b %1").
+                arg(img_path);
+        process.start(command);
+        qDebug()<<__func__<<command;
+        //temporariy solution, should change to non blocking version
+        if(process.waitForFinished(5000)){
+            auto img = QImage::fromData(process.readAll());
+            if(img.isNull()){
+                qDebug()<<__func__<<"exiftool cannot read thumbnail";
+                img = QImage(img_path);
+                if(!img.isNull()){
+                    qDebug()<<__func__<<"plugin can read thumbnail";
+                    return qimage_to_cvmat(img);
+                }
+            }else{
+                qDebug()<<__func__<<"exiftool can read thumbnail";
+                return qimage_to_cvmat(img);
+            }
+        }else{
+            qDebug()<<__func__<<"process do not end";
+            auto img = QImage(img_path);
+            if(!img.isNull()){
+                qDebug()<<__func__<<"plugin can read image";
+                return qimage_to_cvmat(img);
+            }
+        }
+    }else{
+        return cv::imread(img_path.toStdString());
+    }
+
+    return {};
 }
 
 void pics_find_img_hash::run()
@@ -227,7 +277,8 @@ void pics_find_img_hash::run()
         abs_file_path_.removeDuplicates();
         elapsed_time_.start();
         if(pool_size_ > 1){
-            compute_hash_mt2();
+            //compute_hash_mt2();
+            compute_hash();
             qDebug()<<"compute hash mt2(ms) : "<<elapsed_time_.elapsed();
         }else{
             compute_hash();
@@ -238,13 +289,6 @@ void pics_find_img_hash::run()
         qDebug()<<"compare hash consume(ms) : "<<elapsed_time_.elapsed();
     }
 
-    emit end();//*/
-
-    /*abs_file_path_.sort();
-    abs_file_path_.removeDuplicates();
-    //qDebug()<<"compute hash mt(ms) : "<<profiler::execution([this](){compute_hash_mt();});
-    qDebug()<<"compute hash(ms) : "<<profiler::execution([this](){compute_hash();});
-    qDebug()<<"compare hash(ms) : "<<profiler::execution([this](){compare_hash();});
-
-    emit end();//*/
+    emit end();
 }
+

@@ -39,6 +39,7 @@ private:
     void compute_hash_mt();
     void compute_hash_mt2();
 
+    cv::Mat read_img(QString const &img_path);
     void run() override;
 
     QStringList abs_file_path_;
